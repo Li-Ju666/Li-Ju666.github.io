@@ -31,5 +31,6 @@ Since the recursive function (also known as OPT in dynamic programming) has been
 Therefore, the whole OPT is as shown as follows: 
 ![](http://latex.codecogs.com/gif.latex?%24%24OPT%28i%2Cj%29%3D%20%5Cbegin%7Bcases%7D%20True%20%26%20%5Ctext%7Bif%7E%7D%20j%3D0%5C%5C%20False%20%26%20%5Ctext%7Bif%7E%7D%20j%5Cneq0%2C%20i%3D0%5C%5C%20OPT%28i-1%2Cj%29%20%26%20%5Ctext%7Bif%7E%7D%20i%3E0%2Cj-P%5Bi%5D%3C0%5C%5C%20OPT%28i-1%2Cj%29%20%5C%20or%5C%20OPT%28i-1%2Cj-P%5Bi%5D%29%20%26%20%5Ctext%7Botherwise%7D%20%5Cend%7Bcases%7D%24%24)
 
+where i: the ith element being considered and j: the sum which we are seeking a solution for.
 
 
