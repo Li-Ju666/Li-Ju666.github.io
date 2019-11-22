@@ -24,7 +24,7 @@ To solve the problem, following points need to be thought carefully:
 
 1. As a dynamic programming-related problem, what is the substructure of the problem? In another word, how to convert the whole problem into the same problem with smaller sizes of input? 
 
-Lets assume an simple case, P={1,2,3,4} and t=7. For every element (for instance: 4) in P, there are only two cases: the element is included in the subset P', or not. If included, the next step is to solve the (exactly) the same problem, in which P={1,2,3} and t=3. If not, the problem remained is to solve: P={1,2,3} and t=7. If any of the two situations is true, then the answer of the whole problem is true. Then we comes the recursive function: subset_problem(P, t) = subset_problem(P-{P[n]}, t) or subset_problem(P-{P[n]}, t-P[n]), where P is the given list, t is the given sum and n indicates that the nth elements in P is being considered if to be chosen or not. 
+Let's assume a simple case, P={1,2,3,4} and t=7. For every element (for instance: 4) in P, there are only two cases: the element is included in the subset P', or not. If included, the next step is to solve the (exactly) the same problem, in which P={1,2,3} and t=3. If not, the problem remained is to solve: P={1,2,3} and t=7. If any of the two situations is true, then the answer of the whole problem is true. Here comes the recursive function: subset_problem(P, t) = subset_problem(P-{P[n]}, t) or subset_problem(P-{P[n]}, t-P[n]), where P is the given list, t is the given sum and n indicates that the nth elements in P is being considered if to be chosen or not. 
 
 Since the recursive function (also known as OPT in dynamic programming) has been obtained, let's step on to find the base cases: 1. if given t=0, any given list will return an empty subset and true; 2. if given P has only one value P[1], the result will be t==P[1]; 3. if given t is bigger than the element being considered (P[n]), we directly jump to subset_problem(P-{P[n]}, t). 
 
@@ -33,5 +33,10 @@ Therefore, the whole OPT is as shown as follows:
 ![](http://latex.codecogs.com/gif.latex?%24%24OPT%28i%2Cj%29%3D%20%5Cbegin%7Bcases%7D%20True%20%26%20%5Ctext%7Bif%7E%7D%20j%3D0%5C%5C%20False%20%26%20%5Ctext%7Bif%7E%7D%20j%5Cneq0%2C%20i%3D0%5C%5C%20OPT%28i-1%2Cj%29%20%26%20%5Ctext%7Bif%7E%7D%20i%3E0%2Cj-P%5Bi%5D%3C0%5C%5C%20OPT%28i-1%2Cj%29%20%5C%20or%5C%20OPT%28i-1%2Cj-P%5Bi%5D%29%20%26%20%5Ctext%7Botherwise%7D%20%5Cend%7Bcases%7D%24%24)
 
 where i: the ith element being considered and j: the sum which we are seeking a solution for.
+
+2. As the recursive function will calculate some subproblems repetitively, as the slogan of dynamic programming says: "Those who forget the past is condemned to repeat it again and again", it is required to save the calculated results of subproblems. How can we achieve this? 
+
+As the OPT we get is a two-variable function, therefore, a two-dimension matrix is required to save the results of subproblems. The two dimension is: the number of elements in the subset we are considering (i in the subproblem), and the target price (j). The whole matrix should have the size of [n+1, t+1], for the range of i and j are from [0, n] and [0, t], respectively. 
+
 
 
