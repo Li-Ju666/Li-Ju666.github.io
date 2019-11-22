@@ -43,6 +43,6 @@ As the OPT we get is a two-variable function, therefore, a two-dimension matrix 
 As the slogan of dynamic programming implies, the results of subproblems is repeatitively used during the calculation and the matrix is used to save the results. Therefore, a simple thinking is that, as long as the result of A[n,t] required values of other positions again and again, if the matrix is fulfilled from left to right, from top row to bottom, there won't be any repetition during the calculation (as OPT shows, one's value is only from base cases or values in its left and upper positions). At the end, A[n,t] is returned as the result of the whole problem. This is called bottom-up way in dynamic programming. 
 
 However if one reconsiders the bottom-up approach, (s)he will find that, many values in the matrix is actually useless to get A[n,t], which is actually what we require. For instance like following examply: 
-![avatar](/img/19-11-29/01.jpg)
+![avatar](/img/19-11-21/01.jpg)
 
 
