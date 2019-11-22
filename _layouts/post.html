@@ -12,7 +12,6 @@ layout: default
         position: relative;
         background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')
     }
-    {% include mathjax.html %}
     {% if page.header-mask %}
     header.intro-header .header-mask{
         width: 100%;
@@ -171,7 +170,7 @@ layout: default
     </div>
 </article>
 
-
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript" ></script>
 {% if site.disqus_username %}
 <!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
