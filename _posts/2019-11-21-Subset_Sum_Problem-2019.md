@@ -36,7 +36,13 @@ where i: the ith element being considered and j: the sum which we are seeking a 
 
 2. As the recursive function will calculate some subproblems repetitively, as the slogan of dynamic programming says: "Those who forget the past is condemned to repeat it again and again", it is required to save the calculated results of subproblems. How can we achieve this? 
 
-As the OPT we get is a two-variable function, therefore, a two-dimension matrix is required to save the results of subproblems. The two dimension is: the number of elements in the subset we are considering (i in the subproblem), and the target price (j). The whole matrix should have the size of [n+1, t+1], for the range of i and j are from [0, n] and [0, t], respectively. 
+As the OPT we get is a two-variable function, therefore, a two-dimension matrix is required to save the results of subproblems. The two dimensions are: the number of elements in the subset we are considering (i in the subproblem), and the target price (j). The whole matrix should have the size of [n+1, t+1], for the range of i and j are from [0, n] and [0, t], respectively. Each position in the matrix (A[i,j]) represent the result of subproblem(P-{P[i: len(P)]}, j), thus, the value of A[n,t] is the result of the whole problem. 
 
+3. How can we get the result we need with the result matrix? 
+
+As the slogan of dynamic programming implies, the results of subproblems is repeatitively used during the calculation and the matrix is used to save the results. Therefore, a simple thinking is that, as long as the result of A[n,t] required values of other positions again and again, if the matrix is fulfilled from left to right, from top row to bottom, there won't be any repetition during the calculation (as OPT shows, one's value is only from base cases or values in its left and upper positions). At the end, A[n,t] is returned as the result of the whole problem. This is called bottom-up way in dynamic programming. 
+
+However if one reconsiders the bottom-up approach, (s)he will find that, many values in the matrix is actually useless to get A[n,t], which is actually what we require. For instance like following examply: 
+![avatar](/img/19-11-29/01.jpg)
 
 
