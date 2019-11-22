@@ -40,9 +40,12 @@ As the OPT we get is a two-variable function, therefore, a two-dimension matrix 
 
 3. How can we get the result we need with the result matrix? 
 
-As the slogan of dynamic programming implies, the results of subproblems is repeatitively used during the calculation and the matrix is used to save the results. Therefore, a simple thinking is that, as long as the result of A[n,t] required values of other positions again and again, if the matrix is fulfilled from left to right, from top row to bottom, there won't be any repetition during the calculation (as OPT shows, one's value is only from base cases or values in its left and upper positions). At the end, A[n,t] is returned as the result of the whole problem. This is called bottom-up way in dynamic programming. 
+As the slogan of dynamic programming implies, the results of subproblems is repeatitively used during the calculation and the matrix is used to save the results. Therefore, a simple thinking is that, as long as the result of A[n,t] required values of other positions again and again, if the matrix is fulfilled with loop, from left to right, from top row to bottom, there won't be any repetition during the calculation (as OPT shows, one's value is only from base cases or values in its left and upper positions). At the end, A[n,t] is returned as the result of the whole problem. This is called bottom-up way in dynamic programming. 
 
 However if one reconsiders the bottom-up approach, (s)he will find that, many values in the matrix is actually useless to get A[n,t], which is actually what we require. For instance like following examply: 
 ![avatar](/img/19-11-21/01.jpg)
+To get the value of A[5, 4], as OPT shows only partly values in the matrix are visited. To optimize the time complexity of the algorithm, a top-down algorithm is developed: Firstly a function is defined: to get the value of a subproblem(i, j), firstly the value of A[i,j] in the matrix is visited, if it is not none (has been calculated and saved in the matrix), return A[i, j]; if not calculated yet, OPT is uded to get the value recursively, and save the result in the matrix. The result of the whole problem is subproblem(n, t): in the calculation, only values required to solve the whole problems are calculated and saved, while others positions keep empty. In this recursive way, the problem solved. 
+
+4. As long as if the problem has a valid solution or not has been solved, how can we input the solution: the chosen subset?
 
 
