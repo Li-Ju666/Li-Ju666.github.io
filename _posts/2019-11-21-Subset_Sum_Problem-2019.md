@@ -41,9 +41,7 @@ $$OPT(i,j)=
 
 where $i$: the ith element being considered and $j$: the sum which we are seeking a solution for.
 
-- As the recursive function will calculate some subproblems repetitively, as the slogan of dynamic programming says: 
->Those who forget the past is condemned to repeat it again and again
-it is required to save the calculated results of subproblems. How can we achieve this? 
+- As the recursive function will calculate some subproblems repetitively, as the slogan of dynamic programming says: "Those who forget the past is condemned to repeat it again and again", it is required to save the calculated results of subproblems. How can we achieve this? 
 
 As the OPT we get is a two-variable function, therefore, a two-dimension matrix is required to save the results of subproblems. The two dimensions are: the number of elements in the subset we are considering ($i$ in the sub_problem), and the target price ($j$). The whole matrix $A$ should have the size of $[n+1, t+1]$, for the range of $i$ and $j$ are from $[0, n]$ and $[0, t]$, respectively. Each position in the matrix ($A[i,j]$) represent the result of $sub\_problem(P-{P[i: len(P)]}, j)$, thus, the value of $A[n,t]$ is the result of the whole problem. 
 
