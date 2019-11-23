@@ -23,7 +23,7 @@ the birthday present problem is to determine whether there exists a subset P'$\s
 ### Problem Solution
 To solve the problem, following points need to be thought carefully: 
 
--1. As a dynamic programming-related problem, what is the substructure of the problem? In another word, how to convert the whole problem into the same problem with smaller sizes of input? 
+- 1. As a dynamic programming-related problem, what is the substructure of the problem? In another word, how to convert the whole problem into the same problem with smaller sizes of input? 
 
 Let's assume a simple case, P={1,2,3,4} and t=7. For every element (for instance: 4) in P, there are only two cases: the element is included in the subset P', or not. If included, the next step is to solve the (exactly) the same problem, in which P={1,2,3} and t=3. If not, the problem remained is to solve: P={1,2,3} and t=7. If any of the two situations is true, then the answer of the whole problem is true. Here comes the recursive function: subset_problem(P, t) = subset_problem(P-{P[n]}, t) or subset_problem(P-{P[n]}, t-P[n]), where P is the given list, t is the given sum and n indicates that the nth elements in P is being considered if to be chosen or not. 
 
@@ -33,13 +33,21 @@ Therefore, the whole OPT is as shown as follows:
 
 ![](http://latex.codecogs.com/gif.latex?%24%24OPT%28i%2Cj%29%3D%20%5Cbegin%7Bcases%7D%20True%20%26%20%5Ctext%7Bif%7E%7D%20j%3D0%5C%5C%20False%20%26%20%5Ctext%7Bif%7E%7D%20j%5Cneq0%2C%20i%3D0%5C%5C%20OPT%28i-1%2Cj%29%20%26%20%5Ctext%7Bif%7E%7D%20i%3E0%2Cj-P%5Bi%5D%3C0%5C%5C%20OPT%28i-1%2Cj%29%20%5C%20or%5C%20OPT%28i-1%2Cj-P%5Bi%5D%29%20%26%20%5Ctext%7Botherwise%7D%20%5Cend%7Bcases%7D%24%24)
 
+$$OPT(i,j)=
+    \begin{cases}
+    True & \text{if~} j=0\\
+    False & \text{if~} j\neq0, i=0\\
+    OPT(i-1,j) & \text{if~} i>0,j-P[i]<0\\
+    OPT(i-1,j) \ or\  OPT(i-1,j-P[i]) & \text{otherwise}
+    \end{cases}$$
+
 where i: the ith element being considered and j: the sum which we are seeking a solution for.
 
--2. As the recursive function will calculate some subproblems repetitively, as the slogan of dynamic programming says: "Those who forget the past is condemned to repeat it again and again", it is required to save the calculated results of subproblems. How can we achieve this? 
+- 2. As the recursive function will calculate some subproblems repetitively, as the slogan of dynamic programming says: "Those who forget the past is condemned to repeat it again and again", it is required to save the calculated results of subproblems. How can we achieve this? 
 
 As the OPT we get is a two-variable function, therefore, a two-dimension matrix is required to save the results of subproblems. The two dimensions are: the number of elements in the subset we are considering (i in the subproblem), and the target price (j). The whole matrix should have the size of [n+1, t+1], for the range of i and j are from [0, n] and [0, t], respectively. Each position in the matrix (A[i,j]) represent the result of subproblem(P-{P[i: len(P)]}, j), thus, the value of A[n,t] is the result of the whole problem. 
 
--3. How can we get the result we need with the result matrix? 
+- 3. How can we get the result we need with the result matrix? 
 
 As the slogan of dynamic programming implies, the results of subproblems is repeatitively used during the calculation and the matrix is used to save the results. Therefore, a simple thinking is that, as long as the result of A[n,t] required values of other positions again and again, if the matrix is fulfilled with loop, from left to right, from top row to bottom, there won't be any repetition during the calculation (as OPT shows, one's value is only from base cases or values in its left and upper positions). At the end, A[n,t] is returned as the result of the whole problem. This is called bottom-up way in dynamic programming. 
 
@@ -47,6 +55,6 @@ However if one reconsiders the bottom-up approach, (s)he will find that, many va
 ![avatar](/img/19-11-21/01.jpg)
 To get the value of A[5, 4], as OPT shows only partly values in the matrix are visited. To optimize the time complexity of the algorithm, a top-down algorithm is developed: Firstly a function is defined: to get the value of a subproblem(i, j), firstly the value of A[i,j] in the matrix is visited, if it is not none (has been calculated and saved in the matrix), return A[i, j]; if not calculated yet, OPT is uded to get the value recursively, and save the result in the matrix. The result of the whole problem is subproblem(n, t): in the calculation, only values required to solve the whole problems are calculated and saved, while others positions keep empty. In this recursive way, the problem solved. 
 
--4. As long as if the problem has a valid solution or not has been solved, how can we input the solution: the chosen subset?
+- 4. As long as if the problem has a valid solution or not has been solved, how can we input the solution: the chosen subset?
 
 
