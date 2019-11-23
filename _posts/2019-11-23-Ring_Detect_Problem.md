@@ -19,4 +19,4 @@ This is the problem in the assignment 1 of Course Algorithm and Data Structure 2
 
 >A. Design and implement an efficient algorithm that returns True if and only if there exists a ring in the undirected graph $G = (V, E)$. Moreover, Extend your function to return also a ring, if one exists. Implement your extended algorithm as the Python function `ring(G)`.You can not assume that $G$ is connected. 
 
->B.  Argue that your algorithm has a time complexity of $\O(V)$, independent of $|E|$.
+>B.  Argue that your algorithm has a time complexity of $\mathcal{O}(V)$, independent of $#E$.
