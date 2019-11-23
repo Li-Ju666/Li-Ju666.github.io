@@ -93,3 +93,6 @@ def ring_extended(G):
 Everything seems perfect so far. We continue to analyze the complexity of the algorithm. As we all know, the time complexity of DFS (deep-first search) is of $\mathcal{O}(V+E)$. However the task requires the time complexity if bounded by $\mathcal{O}(V)$, then how to improve the algorithm to meet the requirement? 
 
 Actually our algorithm **IS** of time complexity of  $\mathcal{O}(V)$, though it seems of  $\mathcal{O}(V+E)$. Here is the proof: 
+\begin{proof}
+?????
+\end{proof}
