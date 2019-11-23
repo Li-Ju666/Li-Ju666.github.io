@@ -22,7 +22,7 @@ This is the problem in the assignment 1 of Course Algorithm and Data Structure 2
 >B.  Argue that your algorithm has a time complexity of $\mathcal{O}(V)$, independent of $E$.
 
 ### Problem Solution
-Here a DFS-like algorithm is designed. The basic principle is: if marked all nodes as undiscovered, starting from any of the undiscovered node, DFS is used to explore its connected nodes and noted them as discovered; if any node is discovered twice, then a ring is found. The algorithm is shown as follows: 
+Here a DFS-like algorithm is designed. The basic principle is: if marked all nodes as undiscovered, starting from any of the undiscovered node, DFS is used to explore its connected nodes and noted them as discovered; if any node is discovered twice, then a ring is found. Psudocode of the algorithm is shown as following: 
 ```
 discovered = *none*
 undiscovered = *all_nodes*
@@ -43,4 +43,53 @@ def explore(node, its parent):
 ```
 The algorithm is designed specially in `while(undiscovered is not empty and result = false)`, that is to say, even if the graph is not connected (containing more than one blocks), the algorithm still works. 
 
-Returning a boolean value indicating if a ring exists in the given graph is solved, however, to return the nodes in the ring remains the problem.  
+Returning a boolean value indicating if a ring exists in the given graph is solved, however, to return the nodes in the ring remains the problem. For discovered nodes, each node has at most one parent node, indicating from which node it is discovered (for start_node, its parent is none). Here I use the parent of node to trace back and to find the nodes in the ring. If the node ($n$) find a node that has been discovered ($n_d$) twice, then $n_d$ is the starting node of the ring and edge$(n_d, n)$ is the first edge of the ring. Then starting from $n$,  we start to check its parent node($n.parent$), if $n.parent$ is not $n_d$, we save $n.parent$ in the ring list and assign $n = n.parent$ and keep tracing till one's parent is node $n_d$. The psudocode above does not save the parent of each discovered node, so it can be improved to use a dictionary to track parent nodes, in which the key is the node and the corresponding value is its parent. When exploring node, the pair of key and value is added into the dictionary named `parent_dic`.  The ring can be found by keep tracking with dictionary `parent_dic`. Here is the implementation of algorithm as shown following: 
+```
+
+def ring_extended(G):
+    result = False
+    discovered = []
+    undiscovered = list(G.nodes)
+    parent_dic = {}
+    ring_elements = []
+
+    def explore(node, parent):
+        result = False
+        if node not in discovered:
+
+            discovered.append(node)
+            parent_dic[node] = parent
+            undiscovered.remove(node)
+
+            adj = list(G.adj[node])
+
+            if parent is not None:
+                adj.remove(parent)
+
+            discovered_again = [i for i in adj if i in discovered]
+
+            if len(discovered_again) != 0:
+                print("RING FOUND! ")
+                ring_elements.append(random.choice(discovered_again))
+                ring_elements.append(node)
+                return True
+            else:
+                for i in adj:
+                    if result is False:
+                        result = explore(i, node)
+                return result
+
+    while (len(undiscovered) != 0 and result is False):
+        start_node = random.choice(undiscovered)
+        result = explore(start_node, None)
+    if (result is True):
+        i = 1
+        while ring_elements[i] != ring_elements[0]:
+            ring_elements.append(parent_dic[ring_elements[i]])
+            i = i + 1
+    return result, ring_elements
+```
+
+Everything seems perfect so far. We continue to analyze the complexity of the algorithm. As we all know, the time complexity of DFS (deep-first search) is of $\mathcal{O}(V+E)$. However the task requires the time complexity if bounded by $\mathcal{O}(V)$, then how to improve the algorithm to meet the requirement? 
+
+Actually our algorithm **IS** of time complexity of  $\mathcal{O}(V)$, though it seems of  $\mathcal{O}(V+E)$. Here is the proof: 
