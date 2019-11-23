@@ -93,6 +93,5 @@ def ring_extended(G):
 Everything seems perfect so far. We continue to analyze the complexity of the algorithm. As we all know, the time complexity of DFS (deep-first search) is of $\mathcal{O}(V+E)$. However the task requires the time complexity if bounded by $\mathcal{O}(V)$, then how to improve the algorithm to meet the requirement? 
 
 Actually our algorithm **IS** of time complexity of  $\mathcal{O}(V)$, though it seems of  $\mathcal{O}(V+E)$. Here is the proof: 
-\begin{proof}
-?????
-\end{proof}
+
+We note the discovered nodes and edges as $G'(Esub, Vsub)$, a subgraph of the given graph $G(E, V)$. According to our previous knowledge, for any graph, if $#E>V-1$, a ring definitely exists. For $G'$, there is at most 1 ring existing, thus we have $Esub$ is bounded by $Vsub$. while $Vsub$ is bounded by $V$. Therefore, thought our algorithm is DFS-like, however the complexity of it is of $\mathcal{O}(V+V) \Rightarrow \mathcal{O}(V)$. 
