@@ -55,4 +55,70 @@ To get the value of $A[5, 4]$, as OPT shows only partly values in the matrix are
 
 - As long as if the problem has a valid solution or not has been solved, how can we return the solution: the chosen subset?
 
+To return the chosen subset, it is required to trace back, which elements are selected one by one. So far, as the result matrix $A$ has been obtained, $A$ can be used to track chosen ones. For each "true" value in $A$ (let's say, $A[i,j]$), there are two possible situations the value is from: if $A[i-1,j]$ is also true, then $P[i]$ is not chosen, we should check $A[i-1, j]$ further; else $P[i]$ is chosen, we should add $P[i]$ into the list (to save chosen elements), and check $A[i-1, j-P[i]]$ further. We can trace all the chosen elements back starting from the most right-bottom "true" value recursively. 
 
+Our algorithm ends, returning a boolean value indicating whether a valid solution exists or not, and a list with all the chosen elements. Following is the implementation of the algorithm: 
+```
+def birthday_present_subset(P, n, t):
+    '''
+    Sig:  int[0..n-1], int, int --> int[0..m]
+    Pre:  P is an array of n non-negative integers, t>=0
+    Post: If there is a valid subset P' of P that solves the problem,
+          return P'. Return empty list otherwise.
+    Ex:   P = [2, 32, 234, 35, 12332, 1, 7, 56]
+          birthday_present_subset(P, len(P), 299) = [56, 7, 234, 2]
+          birthday_present_subset(P, len(P), 11) = []
+    '''
+
+
+    # Like function birthday_present(), A is the result matrix.
+    A = [[None for i in range(t + 1)] for j in range(n + 1)]
+    # list  'subset' is used to store the chosen elements.
+    subset = []
+
+    def birthday_sub(P, i, j):
+        '''
+        Sig:  int[0..n-1], int, int --> Boolean
+        Pre:  i, j are non negative integers, i<=n, j<=t,
+              P is a list of n non negative integers.
+        Post: True if valid solution exists for birthday_present(P,i,j),
+              False otherwise
+        Ex:   P = [2, 32, 234]
+              birthday_sub(P,0,2) = False
+              birthday_sub(P,1,2) = True
+        '''
+        #nonlocal A
+        if A[i][j] == None:
+            if j == 0:
+                A[i][j] = True
+            else:
+                if i == 0:
+                    A[i][j] = False
+                elif P[i-1] > j: 
+                    A[i][j] = birthday_sub(P, i-1, j)
+                else: 
+                    A[i][j] = birthday_sub(P, i-1, j) or birthday_sub(P, i-1, j-P[i-1])
+        return A[i][j]
+
+    # find_subset function is defined: to find the chosen elements recursively, by tracing where the 'true' is from.
+    def find_subset(i, j):
+        '''
+        Sig:  int, int --> int[0..m]
+        Pre:  n, t are non negative integers, 
+        Post: (none)
+        '''
+
+         #nonlocal subset, P, A
+        if i > 0 and j > 0 and A[i][j] == True:
+                # if A[i-1][j] is also true, P[i-1] is not in the chosen subset.
+                if A[i-1][j] == True: 
+                    find_subset(i-1, j)
+                # Otherwise P[n-1] is in the chosen subset.
+                else: 
+                    subset.append(P[i-1])
+                    find_subset(i-1, j-P[i-1])
+
+    A[n][t] = birthday_sub(P, n, t)
+    find_subset(n, t)
+    return A[n][t], subset
+```
