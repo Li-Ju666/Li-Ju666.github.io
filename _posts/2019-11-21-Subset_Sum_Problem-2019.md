@@ -43,7 +43,7 @@ where i: the ith element being considered and j: the sum which we are seeking a 
 
 - As the recursive function will calculate some subproblems repetitively, as the slogan of dynamic programming says: "Those who forget the past is condemned to repeat it again and again", it is required to save the calculated results of subproblems. How can we achieve this? 
 
-As the OPT we get is a two-variable function, therefore, a two-dimension matrix is required to save the results of subproblems. The two dimensions are: the number of elements in the subset we are considering (i in the subproblem), and the target price (j). The whole matrix should have the size of [n+1, t+1], for the range of i and j are from [0, n] and [0, t], respectively. Each position in the matrix (A[i,j]) represent the result of subproblem(P-{P[i: len(P)]}, j), thus, the value of A[n,t] is the result of the whole problem. 
+As the OPT we get is a two-variable function, therefore, a two-dimension matrix is required to save the results of subproblems. The two dimensions are: the number of elements in the subset we are considering (i in the subproblem), and the target price (j). The whole matrix 'A' should have the size of [n+1, t+1], for the range of i and j are from [0, n] and [0, t], respectively. Each position in the matrix (A[i,j]) represent the result of subproblem(P-{P[i: len(P)]}, j), thus, the value of A[n,t] is the result of the whole problem. 
 
 - How can we get the result we need with the result matrix? 
 
@@ -53,6 +53,6 @@ However if one reconsiders the bottom-up approach, (s)he will find that, many va
 ![avatar](/img/19-11-21/01.jpg)
 To get the value of A[5, 4], as OPT shows only partly values in the matrix are visited. To optimize the time complexity of the algorithm, a top-down algorithm is developed: Firstly a function is defined: to get the value of a subproblem(i, j), firstly the value of A[i,j] in the matrix is visited, if it is not none (has been calculated and saved in the matrix), return A[i, j]; if not calculated yet, OPT is uded to get the value recursively, and save the result in the matrix. The result of the whole problem is subproblem(n, t): in the calculation, only values required to solve the whole problems are calculated and saved, while others positions keep empty. In this recursive way, the problem solved. 
 
-- As long as if the problem has a valid solution or not has been solved, how can we input the solution: the chosen subset?
+- As long as if the problem has a valid solution or not has been solved, how can we return the solution: the chosen subset?
 
 
