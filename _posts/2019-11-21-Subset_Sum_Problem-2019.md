@@ -13,10 +13,10 @@ tags:								#标签
 
 
 ## Subset Sum Problem
-This is the problem in the assignment 1 of Course Algorithm and Data Structure 2. Here are my solutions.  $x=x$
+This is the problem in the assignment 1 of Course Algorithm and Data Structure 2. Here are my solutions.
 ### Problem Description
 > Given a set P of prices for items in a gift shop, as well as a total amount t of money collected by a group of people towards buying birthday presents for a common friend, 
-the birthday present problem is to determine whether there exists a subset P'![](http://latex.codecogs.com/gif.latex?%5Csubseteq)P whose sum is exactly t, since we do not want to distribute any excess money back to the donors. For example, if P={1, 7, 2, 32, 56, 35, 234, 12332} and t = 299, then the subset P'={2, 7, 56, 234} is a solution, but there is no solution for t = 11. Perform the following tasks:
+the birthday present problem is to determine whether there exists a subset P'\subsetP whose sum is exactly t, since we do not want to distribute any excess money back to the donors. For example, if P={1, 7, 2, 32, 56, 35, 234, 12332} and t = 299, then the subset P'={2, 7, 56, 234} is a solution, but there is no solution for t = 11. Perform the following tasks:
 
 >Give a recursive equation for the required Boolean, including the semantics of all the parameters. Design and implement an efficient dynamic programming algorithm for the birthday present problem as a Python function birthday present(P, n, t) that returns True and the chosen subset if and only if there exists a subset P' with sum t ≥ 0 of the set P, which is given as an array of n non-negative integers.If there is not a valid subset, return False and an empty list. Analyze the complexity of your algorithm in the worst case. 
 
