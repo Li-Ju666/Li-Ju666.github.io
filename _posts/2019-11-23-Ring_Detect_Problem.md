@@ -17,4 +17,4 @@ This is the problem in the assignment 1 of Course Algorithm and Data Structure 2
 ### Problem Description
 >In an undirected graph, a path <$v_0, v_1, ..., v_k$> forms a ring if the vertices $v_0$ and $v_k$ are equal and all edges on the path are distinct:
 
-$\forall(i, j \in 0, .. k-1)\: i\uneq j \Rightarrow (v_i, v_{i+1}) \neq (v_j, v_{j+1})$
+> $\forall(i, j \in 0, .. k-1)\: i\neq j \Rightarrow (v_i, v_{i+1}) \neq (v_j, v_{j+1})$
