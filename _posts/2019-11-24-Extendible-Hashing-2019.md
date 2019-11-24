@@ -16,7 +16,7 @@ tags:								#标签
 ## Extendable Hashing
 This is the problem in the assignment 1 of Database Design 2. Here are my solutions. 
 ### Problem Description
-> Load the records: 2369, 3760, 4692, 4871, 5659, 1821, 1074, 7115, 1620, 2428, 3943, 4750, 6975, 4981, 9208 (in the given order) into an
+> Load the records: 2369, 3760, 4692, 4871, 5659, 1821, 1074, 7115, 1620, 2428, 3943, 4750, 6975 (in the given order) into an
 expandable hash file based on extendible hashing. Show the structure of the directory at each step. Show the directory at each step, and the global and local depths. 
 Use the hash function h(k) = K mod 32. Assume that each bucket is one disk block and holds two records. 
 
@@ -24,7 +24,7 @@ Use the hash function h(k) = K mod 32. Assume that each bucket is one disk block
 The key feature of extendible hashing is: extendible as the number of data to be stored increases. The procedures are listed as following: 
 
 1. Use hashing function to calculate data's hashing values and convert them into binary: 
-{2369, 3760, 4692, 4871, 5659, 1821, 1074, 7115, 1620, 2428, 3943, 4750, 6975, 4981, 9208} $\Rightarrow$ {1, 16, 20, 7, 27, 29, 18, 11, 20, 28, 7, 14, 31, 21, 24} $\Rightarrow$ {'00001', '10000', '10100', '00111', '11011', '11101', '10010', '01011', '10100', '11100', '00111', '01110', '11111', '10101', '11000'}
+{2369, 3760, 4692, 4871, 5659, 1821, 1074, 7115, 1620, 2428, 3943, 4750, 6975} $\Rightarrow$ {1, 16, 20, 7, 27, 29, 18, 11, 20, 28, 7, 14, 31} $\Rightarrow$ {'00001', '10000', '10100', '00111', '11011', '11101', '10010', '01011', '10100', '11100', '00111', '01110', '11111'}
 
 2. Then we start to add given data to hash table one by one. Firstly we choose the first *1* digit of the binary mod value to be the key of hash blocks (so global depth is *1*), and add given data into table one by one like following figure shows: 
 
@@ -55,4 +55,10 @@ Though both block `0` and `1` need to be extended, only `1` *ACTUALLY* splited i
 ![avatar](/img/19-11-24/6.jpg)
 
 8. For 6975, the whole table need to extend to global depth of 4: 
+
+![avatar](/img/19-11-24/7.jpg)
+
+Here comes the final hash table. 
+
+
 
