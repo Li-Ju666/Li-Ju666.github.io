@@ -21,20 +21,9 @@ expandable hash file based on extendible hashing. Show the structure of the dire
 Use the hash function h(k) = K mod 32. Assume that each bucket is one disk block and holds two records. 
 
 ### Problem Solution
-The key feature of extendible hashing is: extendible as the number of data to be stored increases. 
+The key feature of extendible hashing is: extendible as the number of data to be stored increases. The procedures are listed as following: 
 
-<escape>
-<table>
-  <tr>
-    <th>00</th>
-    <th>01</th>
-    <th>10</th>
-    <th>11</th>
-  </tr>
-  <tr>
-    <td colspan="2">14</td>
-    <td>15</td>
-    <td>15</td>
-  </tr>
-</table>
-</escape>
+1. Use hashing function to calculate data's hashing values and convert them into binary: 
+{2369, 3760, 4692, 4871, 5659, 1821, 1074, 7115, 1620, 2428, 3943, 4750, 6975, 4981, 9208} $\Rightarrow$ {1, 16, 20, 7, 27, 29, 18, 11, 20, 28, 7, 14, 31, 21, 24} $\Rightarrow$ {'00001', '10000', '10100', '00111', '11011', '11101', '10010', '01011', '10100', '11100', '00111', '01110', '11111', '10101', '11000'}
+
+2. 
