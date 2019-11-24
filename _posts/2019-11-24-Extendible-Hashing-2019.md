@@ -26,4 +26,5 @@ The key feature of extendible hashing is: extendible as the number of data to be
 1. Use hashing function to calculate data's hashing values and convert them into binary: 
 {2369, 3760, 4692, 4871, 5659, 1821, 1074, 7115, 1620, 2428, 3943, 4750, 6975, 4981, 9208} $\Rightarrow$ {1, 16, 20, 7, 27, 29, 18, 11, 20, 28, 7, 14, 31, 21, 24} $\Rightarrow$ {'00001', '10000', '10100', '00111', '11011', '11101', '10010', '01011', '10100', '11100', '00111', '01110', '11111', '10101', '11000'}
 
-2. 
+2. Then we start to add given data to hash table one by one. Firstly we choose the 1st *1* digit of the binary mod value to be differentiate blocks (so global depth is *1*), like following figure shows: 
+
