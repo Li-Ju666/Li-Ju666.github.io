@@ -94,7 +94,7 @@ Everything seems perfect so far. We continue to analyze the complexity of the al
 
 Actually our algorithm **IS** of time complexity of  $\mathcal{O}(V)$, though it seems of  $\mathcal{O}(V+E)$. Here is the proof: 
 
-We note the discovered nodes and edges as $G'(Esub, Vsub)$, a subgraph of the given graph $G(E, V)$. According to our previous knowledge, for any graph, if $#E>V-1$, a ring definitely exists. For $G'$, there is at most 1 ring existing, thus we have $Esub$ is bounded by $Vsub$. while $Vsub$ is bounded by $V$. Therefore, thought our algorithm is DFS-like, however the complexity of it is of $\mathcal{O}(V+V) \Rightarrow \mathcal{O}(V)$. 
+We note the discovered nodes and edges as $G'(Esub, Vsub)$, a subgraph of the given graph $G(E, V)$. According to our previous knowledge, for any graph, if $E>V-1$, a ring definitely exists. For $G'$, there is at most 1 ring existing, thus we have $Esub$ is bounded by $Vsub$. while $Vsub$ is bounded by $V$. Therefore, thought our algorithm is DFS-like, however the complexity of it is of $\mathcal{O}(V+V) \Rightarrow \mathcal{O}(V)$. 
 
 The blog should come to an end here. However, my teammate found another severe problems of the algorithm!!! A quite small point, but it ruined the algorithm, making its time complexity increase to $\mathcal{O}(V^3)$. 
 
