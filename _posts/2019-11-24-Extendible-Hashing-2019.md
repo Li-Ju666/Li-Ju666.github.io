@@ -24,23 +24,17 @@ Use the hash function h(k) = K mod 32. Assume that each bucket is one disk block
 The key feature of extendible hashing is: extendible as the number of data to be stored increases. 
 
 <escape>
-<style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
-.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
-.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;}
-.tg .tg-nrix{text-align:center;vertical-align:middle}
-</style>
-<table class="tg">
+<table>
   <tr>
-    <th class="tg-nrix">00</th>
-    <th class="tg-nrix">01</th>
-    <th class="tg-nrix">10</th>
-    <th class="tg-nrix">11</th>
+    <th>00</th>
+    <th>01</th>
+    <th>10</th>
+    <th>11</th>
   </tr>
   <tr>
-    <td class="tg-nrix" colspan="2">14</td>
-    <td class="tg-nrix">15</td>
-    <td class="tg-nrix">15</td>
+    <td colspan="2">14</td>
+    <td>15</td>
+    <td>15</td>
   </tr>
 </table>
 </escape>
