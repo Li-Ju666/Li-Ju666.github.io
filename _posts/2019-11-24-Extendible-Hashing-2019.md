@@ -26,3 +26,25 @@ The key feature of extendible hashing is: extendible as the number of data to be
 | dsaf | asdfa |
   ---  | ----  
 | asdf | sadf  |
+
+<table>
+   <tr>
+      <td>00</td>
+      <td>14</td>
+   </tr>
+   <tr>
+      <td>01</td>
+      <td></td>
+   </tr>
+   <tr>
+      <td>10</td>
+      <td>15</td>
+   </tr>
+   <tr>
+      <td>11</td>
+      <td>14</td>
+   </tr>
+   <tr>
+      <td></td>
+   </tr>
+</table>
