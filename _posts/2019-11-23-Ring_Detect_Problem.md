@@ -95,3 +95,56 @@ Everything seems perfect so far. We continue to analyze the complexity of the al
 Actually our algorithm **IS** of time complexity of  $\mathcal{O}(V)$, though it seems of  $\mathcal{O}(V+E)$. Here is the proof: 
 
 We note the discovered nodes and edges as $G'(Esub, Vsub)$, a subgraph of the given graph $G(E, V)$. According to our previous knowledge, for any graph, if $#E>V-1$, a ring definitely exists. For $G'$, there is at most 1 ring existing, thus we have $Esub$ is bounded by $Vsub$. while $Vsub$ is bounded by $V$. Therefore, thought our algorithm is DFS-like, however the complexity of it is of $\mathcal{O}(V+V) \Rightarrow \mathcal{O}(V)$. 
+
+The blog should come to an end here. However, my teammate found another severe problems of the algorithm!!! A quite small point, but it ruined the algorithm, making its time complexity increase to $\mathcal{O}(V^3)$. 
+
+The problem lies in the step when checking a node's connected nodes if they are in the list of `discovered`, it may take $\mathcal{O}(V^2)$ for each node explore. Therefore, the entire complexity of the algorithm is of $\mathcal{O}(V^3)$. To keep the time complexity of the algorithm keep $\mathcal{O}(V)$, this step must reduce to a constant time! Sounds impossible uha? 
+
+Actually we have stored information redundantly in the algorithm. list `discovered` and dictionary `parent_dic` stored the similar information: `discovered` stored discovered nodes while `parent_dic` stored discovered nodes and their unique parent node. Comparing between these two, obviously `parent_dic` is better than `discovered` for two reason: 1. it has more information; 2. visiting dictionary via key is faster than searching in list, that is to say, it is possible to bound the complexity of each check into a constant time (visiting key is using built-in hashing, which is supposed to be of constant time)! 
+
+Here comes the new implementation: 
+```
+def ring_extended(G):
+    result = False
+    undiscovered = list(G.nodes)
+    parent_dic = {}
+    ring_elements = []
+
+    def explore(node, parent):
+        result = False
+        if node not in parent_dic.keys():
+            parent_dic[node] = parent
+            undiscovered.remove(node)
+
+            adj = list(G.adj[node])
+
+            if parent is not None:
+                adj.remove(parent)
+
+            discovered_again = []
+
+            for element in adj:
+                if element in parent_dic.keys():
+                    discovered_again.append(element)
+
+            if len(discovered_again) != 0:
+                print("RING FOUND! ")
+                ring_elements.append(random.choice(discovered_again))
+                ring_elements.append(node)
+                return True
+            else:
+                for i in adj:
+                    if result is False:
+                        result = explore(i, node)
+                return result
+
+    while (len(undiscovered) != 0 and result is False):
+        start_node = random.choice(undiscovered)
+        result = explore(start_node, None)
+    if (result is True):
+        i = 1
+        while ring_elements[i] != ring_elements[0]:
+            ring_elements.append(parent_dic[ring_elements[i]])
+            i = i + 1
+    return result, ring_elements
+```
