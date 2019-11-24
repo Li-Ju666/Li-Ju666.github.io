@@ -23,28 +23,8 @@ Use the hash function h(k) = K mod 32. Assume that each bucket is one disk block
 ### Problem Solution
 The key feature of extendible hashing is: extendible as the number of data to be stored increases. 
 
-| dsaf | asdfa |
-  ---  | ----  
-| asdf | sadf  |
-
-<table>
-   <tr>
-      <td>00</td>
-      <td>14</td>
-   </tr>
-   <tr>
-      <td>01</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>10</td>
-      <td>15</td>
-   </tr>
-   <tr>
-      <td>11</td>
-      <td>14</td>
-   </tr>
-   <tr>
-      <td></td>
-   </tr>
-</table>
+| 00 | 14 |
+|----|----|
+| 01 |    |
+| 10 | 15 |
+| 11 | 14 |
