@@ -23,6 +23,7 @@ Use the hash function h(k) = K mod 32. Assume that each bucket is one disk block
 ### Problem Solution
 The key feature of extendible hashing is: extendible as the number of data to be stored increases. 
 
+<escape>
 <style type="text/css">
 .tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
 .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
@@ -45,3 +46,4 @@ The key feature of extendible hashing is: extendible as the number of data to be
     <td class="tg-cly1"></td>
   </tr>
 </table>
+</escape>
