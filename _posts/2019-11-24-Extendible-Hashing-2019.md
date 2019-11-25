@@ -58,7 +58,9 @@ Though both block `0` and `1` need to be extended, only `1` *ACTUALLY* splited i
 
 ![avatar](/img/19-11-24/7.jpg)
 
-Here comes the final hash table. 
+If two more elements, 4981 and 9208 are added, the table will be like what following shows: 
+
+![avatar](/img/19-11-24/8.jpg)
 
 
 
