@@ -1,7 +1,7 @@
 ---
 layout:     post   				    # 使用的布局（不需要改）
-title:      Minimum_Spanning_Tree_Update_Problem				# 标题 
-subtitle:    #副标题
+title:      MST_Update_Problem				# 标题 
+subtitle:   minimum spanning tree #副标题
 date:       2019-12-02 				# 时间
 author:     Li Ju 						# 作者
 header-img: img/post-bg-2015.jpg 	#这篇文章标题背景图片
