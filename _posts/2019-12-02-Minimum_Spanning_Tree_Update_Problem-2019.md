@@ -16,4 +16,4 @@ tags:								#标签
 ## Minimum_Spanning_Tree_Update_Problem
 This is the problem in the assignment 2 of Algorithm and Data Structure 2. Here are my solutions. 
 ### Problem Description
-Given a connected, weighted, undirected graph $G = (V, E)$ with non-negative edge weights, as well as a minimum(-weight) spanning tree $T = (V, E_0)$ of G, with $E_0 \subset E$, consider the problem of incrementally updating $T$ if the weight of a particular edge $e \in E$ is updated from w(e) to wb(e). There are four cases:
+Given a connected, weighted, undirected graph $G = (V, E)$ with non-negative edge weights, as well as a minimum(-weight) spanning tree $T = (V, E_0)$ of $G$, with $E_0 \subset E$, consider the problem of incrementally updating $T$ if the weight of a particular edge $e \in E$ is updated from w(e) to wb(e). There are four cases:
