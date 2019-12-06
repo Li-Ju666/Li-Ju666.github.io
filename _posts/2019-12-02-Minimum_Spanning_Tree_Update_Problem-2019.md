@@ -16,4 +16,18 @@ tags:								#标签
 ## Minimum_Spanning_Tree_Update_Problem
 This is the problem in the assignment 2 of Algorithm and Data Structure 2. Here are my solutions. 
 ### Problem Description
-Given a connected, weighted, undirected graph $G = (V, E)$ with non-negative edge weights, as well as a minimum(-weight) spanning tree $T = (V, E_0)$ of $G$, with $E_0 \subset E$, consider the problem of incrementally updating $T$ if the weight of a particular edge $e \in E$ is updated from w(e) to wb(e). There are four cases:
+>Given a connected, weighted, undirected graph $G = (V, E)$ with non-negative edge weights, as well as a minimum(-weight) spanning tree $T = (V, E')$ of $G$, with $E' \subset E$, consider the problem of incrementally updating $T$ if the weight of a particular edge $e \in E$ is updated from $w(e)$ to $\widehat{w}(e)$. There are four cases:
+
+>1. $e\notin{E'}$ and $\widehat{w}(e)>w(e)$
+
+>2. $e\notin{E'}$ and $\widehat{w}(e)<w(e)$
+
+>3. $e\in{E'}$ and $\widehat{w}(e)<w(e)$
+
+>4. $e\in{E'}$ and $\widehat{w}(e)>w(e)$
+
+>Perform the following tasks:
+
+>A. For each of the four cases, describe in plain English with mathematical notation an efficient algorithm for updating the minimum spanning tree, and argue that each algorithm is correct and has a time complexity of $\mathcal{O}(|V|)$ or $\mathcal{O}(|E|)$.
+
+>B. For at least one case that does not take constant time, say case $i \in case(1, 2, 3, 4)$, implement your algorithm as a Python function update MST $i(G, T, e, w)$ for $w = \widehat{w}(e)$. If you give functions for multiple values of $i$, then indicate which one you want to be graded, else we choose the one with the lowest $i$.
