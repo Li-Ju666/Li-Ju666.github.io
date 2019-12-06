@@ -31,3 +31,15 @@ This is the problem in the assignment 2 of Algorithm and Data Structure 2. Here 
 >A. For each of the four cases, describe in plain English with mathematical notation an efficient algorithm for updating the minimum spanning tree, and argue that each algorithm is correct and has a time complexity of $\mathcal{O}(\abs{V})$ or $\mathcal{O}(\abs{E})$.
 
 >B. For at least one case that does not take constant time, say case $i \in case(1, 2, 3, 4)$, implement your algorithm as a Python function update MST $i(G, T, e, w)$ for $w = \widehat{w}(e)$. If you give functions for multiple values of $i$, then indicate which one you want to be graded, else we choose the one with the lowest $i$.
+
+### Problem Solution
+
+*Case 1*: Since $e\notin E'$, we know that a spanning tree $T'=(V,E'')$ where $e\in E''$, is either not a MST, or a MST having the same total tree weight with $T$. By increasing the weight of $e$, the total weight of $T'$ becomes greater than that of $T$ in either of these cases, which does not lead to a MST.
+
+Therefore, for this case, we do not make any changes to $T$.
+
+Since we do not need to do any actions for this case, time needed is $\mathcal{O}(0)$, which by definition also belongs in $\mathcal{O}(\abs{V})$.
+
+--------
+
+*Case 2*: 
