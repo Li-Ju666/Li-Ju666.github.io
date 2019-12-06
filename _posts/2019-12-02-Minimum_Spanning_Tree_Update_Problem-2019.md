@@ -18,13 +18,13 @@ This is the problem in the assignment 2 of Algorithm and Data Structure 2. Here 
 ### Problem Description
 >Given a connected, weighted, undirected graph $G = (V, E)$ with non-negative edge weights, as well as a minimum(-weight) spanning tree $T = (V, E')$ of $G$, with $E' \subset E$, consider the problem of incrementally updating $T$ if the weight of a particular edge $e \in E$ is updated from $w(e)$ to $\widehat{w}(e)$. There are four cases:
 
->1. $e\notin{E'}$ and $\widehat{w}(e)>w(e)$
+>case1: $e\notin{E'}$ and $\widehat{w}(e)>w(e)$
 
->2. $e\notin{E'}$ and $\widehat{w}(e)<w(e)$
+>case2: $e\notin{E'}$ and $\widehat{w}(e)<w(e)$
 
->3. $e\in{E'}$ and $\widehat{w}(e)<w(e)$
+>case3: $e\in{E'}$ and $\widehat{w}(e)<w(e)$
 
->4. $e\in{E'}$ and $\widehat{w}(e)>w(e)$
+>case4: $e\in{E'}$ and $\widehat{w}(e)>w(e)$
 
 >Perform the following tasks:
 
