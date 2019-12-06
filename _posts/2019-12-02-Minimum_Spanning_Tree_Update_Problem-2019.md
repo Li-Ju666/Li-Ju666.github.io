@@ -43,3 +43,11 @@ Since we do not need to do any actions for this case, time needed is $\mathcal{O
 --------
 
 *Case 2*: 
+Since $e\notin E'$ and its weight is decreased, we have to check whether its addition to T' and a removal of another edge from it leads to a new MST.
+
+We design an algorithm to update the MST based on that principle. Firstly, we add $e$ to $E'$. Based on [MST's cyclic property](https://en.wikipedia.org/wiki/Minimum_spanning_tree#Cycle_property), we know that now we have a single cycle, $C$, in $T$. We retrieve $C=(V',E'')$ traversing the tree using BFS, find the edge $e'\in E''$ having the maximum weight in $T'$, and remove $e'$ from $T'$. This results in the updated MST.
+
+We argue that the time complexity of the algorithm is $\mathcal{O}(\abs{V})$. Adding an edge to $T'$ takes a constant time $\mathcal{O}(1)$, retrieving the cycle from $T'$, as proven in [previous article](https://li-ju666.github.io/2019/11/23/Ring_Detect_Problem/), it can take $\mathcal{O}(\abs{V})$ time, and traversing all edges in $C$ order to find $e'$ takes $\mathcal{O}(\abs{E''})$ time. But since our cycle has at most $\abs{E'}$ edges, and $\abs{E'}$ is bounded by $\abs{V}$, the time needed is $\mathcal{O}(\abs{V})$.\\
+In total, time needed is $\mathcal{O}(1)+\mathcal{O}(\abs{V})+\mathcal{O}(\abs{V})=\mathcal{O}(\abs{V})$.
+
+
