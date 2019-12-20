@@ -21,8 +21,10 @@ capacity always results in a decrease of the maximum flow; in other words, decre
 of a sensitive edge by a single unit reduces the maximum flow of the entire network. Perform
 the following tasks:
 >
->1. Design and implement an efficient algorithm as a Python function `sensitive(G, s, t, F)` for
+>Design and implement an efficient algorithm as a Python function `sensitive(G, s, t, F)` for
 a flow network $G$ with source $s$ and sink $t$, and a previously computed maximum flow
 matrix $F$, where the element $F[a][b]$ is an integral flow amount over the edge $(a, b)$. Your
 function should return a sensitive edge $(u, v)$ if and only if one exists. If no sensitive edge
 exists, then the function should return `(None, None)`. Then analyze the time complexity of the algorithm. 
+
+### Solution for the problem
