@@ -73,10 +73,10 @@ The implementation of the algorithm is shown as following:
 
 1. A status dictionary is created to record the status of each node, in which all nodes are keys and all values 
 are set as 0 initially. In this dictionary, the value 1 of a node means the node is arranged in set $A$, -1 means 
-it is in set $B$ and 0 means it is not arranged. Also a dictionary named $unarranged_dict$ is defined to record nodes
+it is in set $B$ and 0 means it is not arranged. Also a dictionary named $unarranged\_dict$ is defined to record nodes
 which have not been arranged into a set yet. 
 
-2. A function named $arrange(node, parent)$ is defined, to arrange a node and its children. If its parent is None, 
+2. A function named `arrange(node, parent)` is defined, to arrange a node and its children. If its parent is None, 
 the node is put into $A$, otherwise it is put into $B$. Then its connected nodes are saved to be checked and arranged.
 
 3. From the unarranged node dictionary, we arrange all nodes as defined in step 2. If all nodes are assigned without 
