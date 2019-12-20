@@ -156,7 +156,7 @@ def party(known):
 ------------------------------
 C. The time complexity of the algorithm above is analyzed as following: 
 
-1. Firstly two dictionaries are created, status dictionary and $unarranged_dict$: for each node a constant time will 
+1. Firstly two dictionaries are created, status dictionary and $unarranged\_dict$: for each node a constant time will 
 be cost, therefore, this step will is of the time complexity of $\mathcal{O}(\abs{V})$; 
 
 2. Then nodes are to be arranged: in the worst case, each nodes are well-put in sets following each edge. 
