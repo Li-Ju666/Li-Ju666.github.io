@@ -73,7 +73,7 @@ The implementation of the algorithm is shown as following:
 
 1. A status dictionary is created to record the status of each node, in which all nodes are keys and all values 
 are set as 0 initially. In this dictionary, the value 1 of a node means the node is arranged in set $A$, -1 means 
-it is in set $B$ and 0 means it is not arranged. Also a dictionary named $unarranged\_ dict$ is defined to record nodes
+it is in set $B$ and 0 means it is not arranged. Also a dictionary named `unarranged_dict` is defined to record nodes
 which have not been arranged into a set yet. 
 
 2. A function named `arrange(node, parent)` is defined, to arrange a node and its children. If its parent is None, 
@@ -156,7 +156,7 @@ def party(known):
 ------------------------------
 C. The time complexity of the algorithm above is analyzed as following: 
 
-1. Firstly two dictionaries are created, status dictionary and $unarranged\_ dict$: for each node a constant time will 
+1. Firstly two dictionaries are created, status dictionary and `unarranged_dict`: for each node a constant time will 
 be cost, therefore, this step will is of the time complexity of $\mathcal{O}(\abs{V})$; 
 
 2. Then nodes are to be arranged: in the worst case, each nodes are well-put in sets following each edge. 
