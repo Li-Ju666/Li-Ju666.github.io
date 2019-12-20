@@ -34,20 +34,21 @@ For the problem given, which we will refer to as $sensitive(G,s,t,F)$, $G$ is a 
 
 2. $cap(S, T) = \sum\nolimits_{e \in (S, T)} cap(e)$ $\implies$ reduction of capacity of any edge in $(S, T)$ will reduce $cap(S, T)$ and $val(F)$ correspondingly $\implies$ any edge in $(S, T)$ is sensitive. Moreover, according to the max-flow min-cut theorem, it is guaranteed that at least one sensitive edge exists, therefore it is not possible to return a result with `(None, None)`.
 
-Notation: 
+*Notation: *
 
-$G$: given graph; 
+*$G$: given graph; *
 
-$E$: edges of given graph; 
+*$E$: edges of given graph; 
 
-$(S, T)$: collection of edges in the cut between $S$ and $T$ part of a graph;
+*$(S, T)$: collection of edges in the cut between $S$ and $T$ part of a graph;
 
-$val(F)$: flow value of the given flow; 
+*$val(F)$: flow value of the given flow; 
 
-$cap(S, T)$: flow capacity between $S$ and $T$ part of a graph; 
+*$cap(S, T)$: flow capacity between $S$ and $T$ part of a graph; 
 
-$cap(a)$: flow capacity of node $a$. 
+*$cap(a)$: flow capacity of node $a$. 
 -------------------
+
 The algorithm for $sensitive(G,s,t,F)$ problem is designed as following: 
 
 1. Firstly we create a function named $res_graph(G, F)$ to construct the residual graph of given graph $G$ with its flow $F$;
