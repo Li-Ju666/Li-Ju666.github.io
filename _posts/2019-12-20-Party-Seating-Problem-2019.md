@@ -30,7 +30,7 @@ an arrangement exists, then the algorithm should also return one, in the form of
 duplicate-free lists of guests, namely one list for each table; else the algorithm should
 return `False` and two empty seating lists.
 >
->3. Argue that your algorithm has a time complexity of $\mathcal{O}(\abs{known}+\ell})$; 
+>3. Argue that your algorithm has a time complexity of $\mathcal{O}(\abs{known}+\ell)$; 
 >
 >4. We can generalise the party seating problem to more than two tables in the following
 manner. The party is attended by p groups of guests, and there are q tables. All members
