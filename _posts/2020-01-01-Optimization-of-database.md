@@ -1,7 +1,7 @@
 ---
 layout:     post   				    # 使用的布局（不需要改）
 title:      Optimization of Database I				# 标题 
-subtitle:   storage and database
+subtitle:   Storage and Database
 date:       2020-01-01 				# 时间
 author:     Li Ju 						# 作者
 header-img: img/post-bg-2015.jpg 	#这篇文章标题背景图片
@@ -10,10 +10,10 @@ mathjax: true
 tags:								#标签
     database
 ---
+In this series of articles, the mechanism behind the database together with its optimization will be introduced. 
 
-# Optimization of Database I - Storage and Database
-In this article, the mechanism behind the database together with its optimization will be introduced. 
-Let us start from the basic knowledge of storage. Basically, there are two kinds of storage in computer, memory and magnetic disk. 
+# Storage and Database
+Basically, there are two kinds of storage in computer, memory and magnetic disk. 
 
 ### Comparison between memory and disk
 Memory is rapid for access, but it is expensive and volatile, which means the data will get lost when power is off or system crash occured. So memory is only used to operate data but usually not for data storage. 
