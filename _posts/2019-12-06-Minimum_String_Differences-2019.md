@@ -37,7 +37,7 @@ characters of the alphabet. For example, the positioning above has a difference 
 
 >$R[D,D] + R[I,Y] + R[N,N] + R[A,A] + R[M,M] + R[–,I] + R[C,C] + R[K,–]$
 
->For example, if $R[x, y] = 1$ for all $x, y \in A\cup {–}$ with $x \neq y$ and if $R[x, x] = 0$ 
+>For example, if $R[x, y] = 1$ for all $x, y \in A\cup \{–\}$ with $x \neq y$ and if $R[x, x] = 0$ 
 for all $x\in A\cup {–}$, then the difference of a positioning is the number of changes; 
 another resemblance matrix could store the Manhattan distances on a QWERTY keyboard between characters of the alphabet. 
 
