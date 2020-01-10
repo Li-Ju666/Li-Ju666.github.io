@@ -18,15 +18,15 @@ you need? This article will discuss this question.
 
 Before discussion, following are the notations we will use and term explanations in this article: 
 
-Select $\delta_<condition> (R)$: select records that fulfill condition from relation $R$; 
+Select $\delta_<\text{condition}> (R)$: select records that fulfill condition from relation R; 
 
-Project $\Pi_<attributes> (R)$: project certain attributes of all records from relation $R$; 
+Project $\Pi_<\text{attributes}> (R)$: project certain attributes of all records from relation R; 
 
 Natural join $A\bowtie B$: join relation $A$ and $B$ naturally by their same-name attributes; 
 
-Equijoin $A\bowtie _<equal\_condition> B$: join relation $A$ and $B$ by the equal condition given; 
+Equijoin $A\bowtie _<\text {equal\_condition}> B$: join relation $A$ and $B$ by the equal condition given; 
 
-Thetajoin $A\bowtie _<general\_condition> B$: join relation relation $A$ and $B$ by a more general condition given; 
+Thetajoin $A\bowtie _<\text{general\_condition}> B$: join relation relation $A$ and $B$ by a more general condition given; 
 
 Query tree: use a tree structure to visualize query process. In the tree, two-branch structure stands a join, one-branch
 means select, the root stands for project and the leaves are relations. 
