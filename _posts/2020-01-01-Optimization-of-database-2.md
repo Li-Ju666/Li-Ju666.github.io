@@ -60,17 +60,8 @@ The details about how to add, delete and update elements in a b+ tree is demonst
 However there are few important features of b+ tree that have to be remembered: 
 
 1. the *n* of b+ tree means the maximum pointers of a single unit, which means that at most *n-1* elements are in one unit; 
-<<<<<<< HEAD
-2. b+ tree is a balanced tree, and the height of the tree is no more than &\lceil {\log_{\lceil {n/2}\rceil} (K)} \rceil&, 
+2. b+ tree is a balanced tree, and the height of the tree is no more than $\lceil {\log_{\lceil {n/2}\rceil} (K)} \rceil$, 
 $K$ is the number of elements in the tree; 
 3. when deleting records, the unit will "borrow" elements from its adjacent unit when the elements in the current
 unit $num < \lceil {(n-1)/2} \rceil$, if "borrowing" is not inapplicable, it will combine with its adjacent unit and update
 the whole tree. 
-=======
-2. b+ tree is a balanced tree, and the height of the tree is no more than $\lceil {\log_{\lceil {n/2}} (K)}$, K is the number
-of elements in the tree; 
-3. 
->>>>>>> 9b4525640ad6e1eb9eb9e4dfa69037451171a589
-
-
-
