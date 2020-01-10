@@ -33,6 +33,8 @@ natural join $\subset$ equijoin $\subset$ thetajoin $=$ inner join
 Query tree: use a tree structure to visualize query process. In the tree, two-branch structure stands a join, one-branch
 means select, the root stands for project and the leaves are relations. 
 
+---------------------------------------------------------------------
+
 The query process mainly are 3 steps, translation, evaluation and actual process. In translation step, the query statements
 are translated into relational algebra statements, then the system will evaluation the cost of different ways to fetch required
 records, and finally return the records with the cheapest way. 
@@ -51,7 +53,7 @@ Before investigation about the whole query, we have to know how system deal with
 
 ### selection operation ###
 Selection is to select a subset of records from a relation which fulfill given conditions. There are a bunch of methods
-for selection.
+for selection. All indices referred below are assumed as b+ tree. 
  
 **A1 -- linear file scan**: 
 
@@ -60,6 +62,58 @@ to check if they fulfill the condition one by one.
 
 Cost: For unique attributes: #blocks/2 and for non-unique attributes: #blocks
 
-**A2 -- primary index (equality condition)**
+**A2 -- primary index (equality condition on unique attribute)**
 
-To visit the record with given key value, we follow 
+To visit the record with given key value, we follow the multilevel b+ tree and can access the record directly. 
+
+Cost: height(index tree height)+1(from the index to record)
+
+**A3 -- clustering index (equality condition on non-unique attribute)**
+
+To visit records with given non-key value, we follow the multilevel b+ tree and can access the first record fufilling
+the condition, then following the first record and check blocks one by one till the first record that does not fulfill the 
+condition. 
+
+Cost: height(index tree height)+n(#blocks containing desired records)
+
+**A4 -- secondary index (equality condition on non-unique attribute)**
+
+To visit records with given non-key value, we follow the b+ tree and can access several records fulfilling the condition. 
+
+Cost: height(index tree height)+n(#records fulfilling the condition)
+
+ps: for secondary index which can equality condition on key attribute, it is exactly the same as A2. 
+
+**A5 -- first index (comparison condition)**
+
+For >=: following the tree, fetch the first record that fulfills the condition, then return all records after. If the 
+condition is >, drop records that equal to given value. 
+
+For <: following the tree, fetch the first record that fulfills the condition, then return all records before. If the 
+condition is <=, also move afterward to fetch those which are equal. 
+
+Cost: height(index height)+n(#blocks containing desired records)
+
+**A6 -- secondary index (comparison condition)**
+Do exactly as A5 does, however the cost differs. 
+
+Cost: height(index height)+n(#desired records)
+
+As we can see from the cost, in such case, as records are not ordered as target attribute, for each record, there should
+be a block transfer, because they are stored in different stocks following no order. The cost might be extremely high 
+if there are too many records that fulfill the condition. For such case, linear file scan (A1) is more applicable. 
+
+### sorting operation ###
+
+Though sorting seems not that important in DBSM system, actually they ARE for two reasons: 1). after projection, sometimes
+users might require the relation is sorted by a certain attribute; 2). for a sorted relation, first index is applicable, 
+which will make access much cheaper, and for join operation, a sorted relation will take far less cost. 
+
+There are several ways to sort the relation. 
+
+**Small relation**
+Here we define small relation as those relations which can fit in memory. They can be applied quick sort, heap sort and 
+other common used sorting algorithm to get them sorted. 
+
+**Big relation** In contrast, we define big relation as the relations that cannot fit in our memory. For big relations, 
+*external merge sort* is required. 
