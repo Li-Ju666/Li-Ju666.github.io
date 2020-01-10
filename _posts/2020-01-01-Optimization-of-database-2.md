@@ -63,5 +63,8 @@ However there are few important features of b+ tree that have to be remembered:
 2. b+ tree is a balanced tree, and the height of the tree is no more than $\lceil {\log_{\lceil {n/2}\rceil} (K)} \rceil$, 
 $K$ is the number of elements in the tree; 
 3. when deleting records, the unit will "borrow" elements from its adjacent unit when the elements in the current
-unit $num < \lceil {(n-1)/2} \rceil$, if "borrowing" is not inapplicable, it will combine with its adjacent unit and update
+unit $num < \lceil {(n-1)/2} \rceil$, if "borrowing" is not applicable, it will combine with its adjacent unit and update
 the whole tree. 
+
+This article is a brief introduction how database indices are arranged and classified. In the next article, more details
+about how query will process to visit records via different kinds of indexes, the paths of visiting records. 
