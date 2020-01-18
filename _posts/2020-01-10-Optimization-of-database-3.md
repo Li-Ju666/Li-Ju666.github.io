@@ -117,3 +117,73 @@ other common used sorting algorithm to get them sorted.
 
 **Big relation** In contrast, we define big relation as the relations that cannot fit in our memory. For big relations, 
 *external merge sort* is required. 
+
+```
+[Algorithm]
+Let M denote memory size. 
+1. Create sorted runs. Let i be initially. 
+    Repeadedly do the following till the end of the relation: 
+        a) Read M blocks of relation into memory; 
+        b) Sort the in-memory blocks; 
+        c) Write sorted data to Run_i. 
+    Let the final value of i be N. 
+2. Merge the runs: we assume that N<M. 
+    (1) Use N blocks of memory to buffer input runs, and 1 block to buffer output. 
+        Read the first block of each run into its buffer page; 
+    (2) repeat: 
+        a) select the first record in sort order among all the buffer pages; 
+        b) write the record to the output buffer. If the output buffer is full write
+           it to disk; 
+        c) delete the record from its input buffer page. If the buffer page becomes
+           empty, read the next block of the run into the buffer. 
+    (3) untill all input buffer pages are empty. 
+
+If N>=M, several merge passes are required. 
+    (1) in each pass, contiguous group of M-1 runs are merged. 
+    (2) a pass reduces the number of runs by a factor of M-1, and creates runs longer
+        by the same factor. 
+    (3) repeated passes are performed till runs have been merged into one. 
+    
+```
+### join operation ###
+There are several ways to do join operations on two relations. 
+
+**Nested-loop join**
+
+Nested-loop join is for theta join operation $R\bowtie _{<\text{general\_condition}>} S$. Firstly, the relation R 
+is required to be read into the memory. Then read tuples of relation S one by one into the memory and compare with
+all tuples of relation A one by one. Therefore, the cost of nested-loop join is: $\text{cost}=b_R+n_R*b_S$, where
+$b_R$ is #blocks of R, $b_S$ is #blocks of S and $n_R$ is #records of R. 
+
+**Block nested-loop join**
+
+Block nested-loop join is also for theta join operation $R\bowtie _{<\text{general\_condition}>} S$. Like nested-loop
+join, R is firstly read into then memory. However for relation S, data are operated in the unit of block: read a block
+of S into the memory and compare each record of block with all tuples in R. Therefore, the cost of block nested-loop
+is cheaper than nested-loop join: $\text{cost}=b_R+b_R*b_S$. 
+
+**Index nested-loop join**
+
+Index nested-loop join is for equijoin operation $R\bowtie _{<\text {equal\_condition}>} S$, where there is an tree 
+index on relation S. Again all blocks of relation R are read into memory. For each record, b+ tree is used to seek 
+the equal value in relation S. Therefore, the cost of index nested-loop join is 
+$\text{cost} = b_R + n_R*\text{b+ tree search cost}$. 
+
+**Merge join**
+
+Merge join is for equijoin on relations that are sorted already on the target join attribute
+$R\bowtie _{<\text {equal\_condition}>} S$. All blocks of relation R are read into memory and read block of relation
+S into memory one by one. Then interleaved linear scans will encounter all these matched records. The cost of merge
+join is $\text{cost}=b_R + b_S$. 
+
+## Projection ##
+Projection operation only needs to drop some columns of input and it is simple and cost little. However, 
+when indicated by keyword distinct, duplicates need to be eliminated. Elimination is usually the most expensive part. 
+To eliminate duplicates, commonly there are two ways: 
+a) if index exists, index can be used to choose instinct records easily; 
+b) if there is no index on the target attribute, partitioning (sorting or hashing) is required. In this case, the cost
+will be the cost of hashing or sorting. 
+
+------------------------------------------------------------
+These are the commonly used algorithms for each basic database operations, which are of vital importance when analyzing
+the cost of the whole operations. 
