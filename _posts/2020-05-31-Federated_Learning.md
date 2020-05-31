@@ -24,7 +24,12 @@ Even if data sharing is allowed, data integration will still cost a lot when tra
 federated machine learning is introduced to solve this problem. 
 
 ## Definition
-Define $N$ data owners $\{\mathcal{F}_1, \dots \mathcal{F}_N\}$
+Define $N$ data owners 
+$\{\mathcal{F}_1, \dots \mathcal{F}_N\}$
+, all of whom wish to train a machine-learning model by 
+consolidating their respective data 
+$\{\mathcal{D}_1, \dots \mathcal{D}_N\}$
+
 
 ## Categorization
 According to features of distributed datasets, federated machine learning could be categorized into three different types, 
