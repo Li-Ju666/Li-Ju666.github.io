@@ -33,29 +33,29 @@ $\{\mathcal{D}_1, \dots \mathcal{D}_N\}$
 together and use 
 $\mathcal{D} = \mathcal{D}_1\cup \dots \cup \mathcal{D}_N$
 to train a model 
-;$\mathcal{M}_{\text{SUM}}$. 
-;A federated-learning system is a learning process in which the data owner collaboratively train a model 
-;$\mathcal{M}_{\text{FED}}$
-;, in which process any data owner 
-;$\mathcal{F}_i$ 
-;does not expose its data 
-;$\mathcal{D}_i$
-;to others. In addition, the accuracy of 
-;$\mathcal{M}_{\text{FED}}$
-;, denoted as 
-;$\mathcal{V}_{\text{FED}}$
-;, should be very close to the performance of 
-;$\mathcal{V}_{\text{SUM}}$
-;, which denotes the 
-;accuracy of 
-;$\mathcal{M}_{\text{SUM}}$
-;. Formally, let 
-;$\delta$
-;be a non-negative real number, if 
-;$\mathcal{V}_{\text{FED}}-\mathcal{V}_{\text{SUM}}|<\delta$
-;we say that the federated learning algorithm has 
-;$\delta$
-;-accuracy loss[[2]](https://arxiv.org/abs/1902.04885). 
+//$\mathcal{M}_{\text{SUM}}$. 
+//A federated-learning system is a learning process in which the data owner collaboratively train a model 
+//$\mathcal{M}_{\text{FED}}$
+//, in which process any data owner 
+//$\mathcal{F}_i$ 
+//does not expose its data 
+//$\mathcal{D}_i$
+//to others. In addition, the accuracy of 
+//$\mathcal{M}_{\text{FED}}$
+//, denoted as 
+//$\mathcal{V}_{\text{FED}}$
+//, should be very close to the performance of 
+//$\mathcal{V}_{\text{SUM}}$
+//, which denotes the 
+//accuracy of 
+//$\mathcal{M}_{\text{SUM}}$
+//. Formally, let 
+//$\delta$
+//be a non-negative real number, if 
+//$\mathcal{V}_{\text{FED}}-\mathcal{V}_{\text{SUM}}|<\delta$
+//we say that the federated learning algorithm has 
+//$\delta$
+//-accuracy loss[[2]](https://arxiv.org/abs/1902.04885). 
 ## Categorization
 According to features of distributed datasets, federated machine learning could be categorized into three different types, 
 horizontal federated learning, vertical federated learning and federated transfer learning[[2]](https://arxiv.org/abs/1902.04885). 
