@@ -36,7 +36,7 @@ $\mathcal{D} = \mathcal{D}_1 \cup \dots \cup \mathcal{D}_N$
 to train a model 
 $\mathcal{M}_{\text{SUM}}$. 
 
-$\mathcal{D} = \mathcal{D}_1 \cup \dots \cup \mathcal{D}_N$ and $N$ and $\mathcal{M}_{\text{SUM}}$. 
+$N$ and $\mathcal{M}_{\text{SUM}}$. 
 
 $\mathcal{M}_{\text{SUM}}$. 
 
