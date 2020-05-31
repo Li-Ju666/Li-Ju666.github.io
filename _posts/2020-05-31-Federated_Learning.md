@@ -24,35 +24,7 @@ Even if data sharing is allowed, data integration will still cost a lot when tra
 federated machine learning is introduced to solve this problem. 
 
 ## Definition
-Define $N$ data owners 
-$\{\mathcal{F}_1, \dots \mathcal{F}_N\}$
-, all of whom wish to train a machine-learning model by 
-consolidating their respective data 
-$\{\mathcal{D}_1, \dots \mathcal{D}_N\}$. 
-
-A conventional method is to put all data together 
-
-$\mathcal{D} = \mathcal{D}_1 \cup \dots \cup \mathcal{D}_N$
-
-and use them to train a model $\mathcal{M}_{\text{SUM}}$. 
-
-A federated-learning system is a learning process in which the data owner collaboratively train a model 
-$\mathcal{M}_{\text{FED}}$, in which process any data owner $\mathcal{F}_i$ does not expose its data 
-$\mathcal{D}_i$
-to others. 
-
-In addition, the accuracy of 
-the federated model, denoted as 
-$\mathcal{V}_{\text{FED}}$
-, should be very close to the performance of 
-all-data model, which denotes the 
-accuracy of $\mathcal{M}_{\text{SUM}}$. 
-
-Formally, let $\delta$ be a non-negative real number, if 
-$\mathcal{V}_{\text{FED}}-\mathcal{V}_{\text{SUM}}|<\delta$
-we say that the federated learning algorithm has 
-$\delta$
--accuracy loss[[2]](https://arxiv.org/abs/1902.04885). 
+Because the MarkDown syntax does not support complex $\latex$ notation, detailed definition can be referred from literature[[2]](https://arxiv.org/abs/1902.04885). 
 
 ## Categorization
 According to features of distributed datasets, federated machine learning could be categorized into three different types, 
