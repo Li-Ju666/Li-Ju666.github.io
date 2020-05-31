@@ -25,6 +25,9 @@ federated machine learning is introduced to solve this problem.
 
 ## Definition
 Define $N$ data owners 
+
+$\mathcal{M}_{\text{SUM}}$. 
+
 $\{\mathcal{F}_1, \dots \mathcal{F}_N\}$
 , all of whom wish to train a machine-learning model by 
 consolidating their respective data 
@@ -33,7 +36,7 @@ $\{\mathcal{D}_1, \dots \mathcal{D}_N\}$
 together and use 
 $\mathcal{D} = \mathcal{D}_1\cup \dots \cup \mathcal{D}_N$
 to train a model 
-$\mathcal{M}_{SUM}$. 
+$\mathcal{M}_{\text{SUM}}$. 
 A federated-learning system is a learning process in which the data owner collaboratively train a model 
 $\mathcal{M}_{\text{FED}}$
 , in which process any data owner 
