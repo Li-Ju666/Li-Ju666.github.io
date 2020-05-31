@@ -49,8 +49,9 @@ $\mathcal{V}_{\text{FED}}$
 $\mathcal{V}_{\text{SUM}}$
 , which denotes the 
 accuracy of 
-$\mathcal{M}_{\text{SUM}}$
-. Formally, let 
+$\mathcal{M}_{\text{SUM}}$. 
+
+Formally, let 
 $\delta$
 be a non-negative real number, if 
 $\mathcal{V}_{\text{FED}}-\mathcal{V}_{\text{SUM}}|<\delta$
