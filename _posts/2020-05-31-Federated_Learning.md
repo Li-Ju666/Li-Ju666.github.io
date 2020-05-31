@@ -32,6 +32,14 @@ $\{\mathcal{D}_1, \dots \mathcal{D}_N\}$
 . A conventional method is to put all data 
 together and use 
 $\mathcal{D} = \mathcal{D}_1\cup \dots \cup \mathcal{D}_N$
+to train a model 
+$\mathcal{M}_{\text{SUM}}$. 
+A federated-learning system is a learning process in which the data owner collaboratively train a model 
+$\mathcal{M}_{\text{FED}}$
+, in which process any data owner 
+$\mathcal{F}_i$ 
+does not expose its data 
+$\mathcal{D}_i$
 
 
 ## Categorization
