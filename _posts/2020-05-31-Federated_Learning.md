@@ -42,18 +42,13 @@ $\mathcal{D}_i$
 to others. 
 
 In addition, the accuracy of 
-$\mathcal{M}_{\text{FED}}$
-, denoted as 
+the federated model, denoted as 
 $\mathcal{V}_{\text{FED}}$
 , should be very close to the performance of 
-$\mathcal{V}_{\text{SUM}}$
-, which denotes the 
-accuracy of 
-$\mathcal{M}_{\text{SUM}}$. 
+all-data model, which denotes the 
+accuracy of $\mathcal{M}_{\text{SUM}}$. 
 
-Formally, let 
-$\delta$
-be a non-negative real number, if 
+Formally, let $\delta$ be a non-negative real number, if 
 $\mathcal{V}_{\text{FED}}-\mathcal{V}_{\text{SUM}}|<\delta$
 we say that the federated learning algorithm has 
 $\delta$
