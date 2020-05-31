@@ -32,6 +32,7 @@ $\{\mathcal{D}_1, \dots \mathcal{D}_N\}$
 . A conventional method is to put all data 
 together and use 
 $\mathcal{D} = \mathcal{D}_1\cup \dots \cup \mathcal{D}_N$
+
 to train a model $N$ and $\mathcal{M}_{\text{SUM}}$. 
 
 $\mathcal{M}_{\text{SUM}}$.
