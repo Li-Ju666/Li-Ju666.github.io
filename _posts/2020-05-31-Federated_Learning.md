@@ -24,7 +24,7 @@ Even if data sharing is allowed, data integration will still cost a lot when tra
 federated machine learning is introduced to solve this problem. 
 
 ## Definition
-Because the MarkDown syntax does not support complex $\LaTeX$ notation, detailed definition can be referred from literature[[2]](https://arxiv.org/abs/1902.04885). 
+Because the MarkDown does not support complex $\LaTeX$ syntax very well, detailed definition can be referred from literature[[2]](https://arxiv.org/abs/1902.04885). 
 
 ## Categorization
 According to features of distributed datasets, federated machine learning could be categorized into three different types, 
