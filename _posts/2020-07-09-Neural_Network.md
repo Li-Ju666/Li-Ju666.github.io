@@ -85,17 +85,19 @@ error $E$. Here mean square error is used:
 
 #### How to learn? 
 Like other statistical models, the "training" of neural network is actually the process of looking for $W$s and $B$s 
-that minimize the error $E$. Ideally, we need to find every $W$ that makes $dE/dW=0$ and $B$ that makes $dE/dB=0$. 
-However in this problem, it is almost impossible to do so for 2 reasons: 1. most neural network are multi-layer, which
-makes it very hard to find the equation of $dE/dW$ for every $W$ (and $B$s of course). 2. The variables we are facing 
-are all matrices but not scalar, which makes it far more complex to find deviation functions. Therefore, gradient 
-descending is introduced. 
+that minimize the error $E$. Ideally, we need to find every $W$ that makes $\partial E/\partial W=0$ and $B$ 
+that makes $\partial E/\partial B=0$. However in this problem, it is almost impossible to do so for 2 reasons: 
+1. most neural network are multi-layer, which makes it very hard to find the equation of $\partial E/\partial W$ 
+for every $W$ (and $B$s of course). 
+2. The variables we are facing are all matrices but not scalar, which makes it far more complex to find 
+deviation functions. Therefore, gradient descending is introduced. 
 
 The ideology of gradient descending is actually modify $W$s and $B$s step be step: in every iteration, the deviation
 matrix of each $W$ and $B$ at the specific point will be calculated, which represent how $E$ will change if every
 element of $W$ or $B$ increase by 1: will $E$ increase or decrease and how much will it change (actually this is
-the meaning of deviation xDDDD). Then with a negative learning rate $\text{lr}$, matrices $W$ is updated as 
-$W-lr\times dE/dW$ and $B := B-lr\times dE/dB$, which ensure $E$ is decreased at each step. 
+the meaning of deviation xD). Then with a negative learning rate $\text{lr}$, matrices $W$ is updated as 
+$W-lr\times \partial E/\partial W$ and $B := B-lr\times \partial E/\partial B$, which ensure $E$ is decreased at 
+each step. 
 
 It is easy to specify a learning rate, now the problem is the deviation of $W$ and $B$: how can we get them? 
 Let us look back how $E$ is obtained from $W$s and $B$s: 
@@ -109,11 +111,11 @@ should be the same as the dimensionality of $W$. Firstly, the deviation of $E$ f
 $m\times t$ and it is very easy to calculate by substracting $Y$ from $A^{L+1}$ element-wise and divided by 
 $m\times t$. Deviation of $A^{L+1}$ for $Z^L$ is also simple: because activation function is done on matrix $Z^L$ 
 element-wise as well, so this step can also be done by element-wise calculation. So far the dimension of deviation 
-matrix of $E$ for $Z^L$ is $\m\times t$. Further, we know that $W^L\times A^{L-1} + B^L = Z^L$, so the deviation of 
+matrix of $E$ for $Z^L$ is $m\times t$. Further, we know that $W^L\times A^{L-1} + B^L = Z^L$, so the deviation of 
 $Z^L$ for $W^L$ is matrix $A^{L-1}$ with dimension $m\times n^{L-1}$. How can two matrices 
 ($\partial E/\partial Z^L$ and $\partial Z^L/\partial W^L$) with dimension of $m\times t$ and $m\times n^{L-1}$ 
-multiplied and get the matrix $dE\dW^L$ of dimension $n^{L-1}\times t$? YES! 
-$\partial E/\partial W^L = (A^{L-1}^t)*\partial E/\partial Z^L$. 
+multiplied and get the matrix $\partial E/\partial W^L$ of dimension $n^{L-1}\times t$? YES! 
+$\partial E/\partial W^L = (A^{L-1})^t*\partial E/\partial Z^L$. 
 
 For the second deviation for $B^L$, the matrix should be of dimension $1\times t$, however, $\partial E/\partial Z$
 is a matrix of $m\times t$, and $\partial Z/\partial B$ is a constant 1. If multiplied, the deviation matrix would 
@@ -143,8 +145,8 @@ Then with back propagation error is passed backwards and all $W$s and $B$s get u
 finally $W$s and $B$s will get converged and the model is ready. This is what we called "training of neural network". 
 
 ## Code
-Code of implementation is attached. 
-````
+C implementation code is attached. 
+```C
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -255,11 +257,6 @@ int main(int argc, char** argv){
     vis(output_weight, HIDDEN_NODE, num_target); 
     printf("Output bias:\n"); 
     vis(output_bias, 1, num_target); 
-
-#if WRITE_PREDICTION
-    /* double* result = multiply(training_x, ) */
-
-#endif   
  
     char* s1 = argv[3]; 
     char* s2 = "error_"; 
@@ -453,7 +450,7 @@ void write_error(char* output, double* error, int num){
     }
     fclose(fp); 
 }
-````
+```
 The complete code and Makefile can be founds 
 [here](https://github.com/Li-Ju666/FedML/tree/master/w1/C_implementation/Matrix-based_implementation). 
 
