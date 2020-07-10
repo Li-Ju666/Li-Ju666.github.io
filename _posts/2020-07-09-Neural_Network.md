@@ -49,7 +49,8 @@ high-level functions in which you never know what is going on， mathematics alw
 doing. To make our lives easier, a simple fully-connected network will be explained in mathematical details. One 
 can easily and the simple one into more complex network. 
 
-Following notations will be used:![avatar](/img/20-07-09/notation.png)
+Following notations will be used:
+<<<<<<< HEAD
 #### Forward propagation
 How neural network is dealing with input data is basically represented as following equation: 
 ![avatar](/img/20-07-09/NNequation.png)
@@ -90,6 +91,9 @@ makes it very hard to find the equation of $dE/dW$ for every $W$ (and $B$s of co
 are all matrices but not scalar, which makes it far more complex to find deviation functions. Therefore, gradient 
 descending is introduced. 
 
+=======
+#### Initialization
+>>>>>>> e2aadfef58b697d6330b72c5b20d839a93398d07
 
 
 ## Categorization
