@@ -50,12 +50,12 @@ doing. To make our lives easier, a simple fully-connected network will be explai
 can easily and the simple one into more complex network. 
 
 Following notations will be used:
-![avatar](/img/20-07-09/notations.png)
+![avatar](/img/20-07-09/notation.png)
 #### Forward propagation
 How neural network is dealing with input data is basically represented as following equation: 
 ![avatar](/img/20-07-09/NNequation.png)
 
-The inner part $\sigma^1(\mat X_{m\times n} \cdot \mat W^1_{n\times n^1} + \mat B^1_{1\times n^1}$ is the output of 
+The inner part $\sigma^1(W^1\times X + B^1)$ is the output of 
 the first layer: the input matrix is multiplied by the weight matrix of the 1st layer and also the bias matrix is 
 added. Then with the weighted matrix $Z^1$, the activation function will operated on $Z^1$ element-wise and
 finally output matrix $A^2$ is obtained, which has the same dimension $m\times n^1$ as matrix $Z^1$. 
@@ -83,17 +83,13 @@ To compare how far the output matrix is away from target output, error function 
 error $E$. Here mean square error is used:
 ![avatar](/img/20-07-09/Errorfunc.png)
 
-#### Howto learn? 
+#### How to learn? 
 Like other statistical models, the "training" of neural network is actually the process of looking for $W$s and $B$s 
 that minimize the error $E$. Ideally, we need to find every $W$ that makes $dE/dW=0$ and $B$ that makes $dE/dB=0$. 
 However in this problem, it is almost impossible to do so for 2 reasons: 1. most neural network are multi-layer, which
 makes it very hard to find the equation of $dE/dW$ for every $W$ (and $B$s of course). 2. The variables we are facing 
 are all matrices but not scalar, which makes it far more complex to find deviation functions. Therefore, gradient 
 descending is introduced. 
-
-=======
-#### Initialization
->>>>>>> e2aadfef58b697d6330b72c5b20d839a93398d07
 
 
 ## Categorization
