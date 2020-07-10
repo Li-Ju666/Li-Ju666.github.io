@@ -1,6 +1,6 @@
 ---
 layout:     post   				    # 使用的布局（不需要改）
-title:      Neural Network: basic concepts and implementation in C				# 标题 
+title:      Neural Network-basic concepts and implementation in C				# 标题 
 subtitle:   
 date:       2020-07-09 				# 时间
 author:     Li Ju 						# 作者
@@ -49,8 +49,47 @@ high-level functions in which you never know what is going on， mathematics alw
 doing. To make our lives easier, a simple fully-connected network will be explained in mathematical details. One 
 can easily and the simple one into more complex network. 
 
-Following notations will be used:![avatar](../img/20-07-09/notation.png)
-#### Initialization
+Following notations will be used:![avatar](/img/20-07-09/notation.png)
+#### Forward propagation
+How neural network is dealing with input data is basically represented as following equation: 
+![avatar](/img/20-07-09/NNequation.png)
+
+The inner part $\sigma^1(\mat X_{m\times n} \cdot \mat W^1_{n\times n^1} + \mat B^1_{1\times n^1}$ is the output of 
+the first layer: the input matrix is multiplied by the weight matrix of the 1st layer and also the bias matrix is 
+added. Then with the weighted matrix $Z^1$, the activation function will operated on $Z^1$ element-wise and
+finally output matrix $A^2$ is obtained, which has the same dimension $m\times n^1$ as matrix $Z^1$. 
+A Small point should be paid attention to that the dimension of mat $W\cdotX$ is $m\times n^1$, while the dimension
+of bias term is $1\times n^1$. Commonly matrices with different sizes are unable to be added, however here it is
+actually not ordinary sum: the bias vector $B$ is added to each row of matrix $W\times X$ row-wise. Therefore the 
+output matrix of the 1st layer $A^2$ is of dimension $m\times n^1$. 
+
+Likewise, $A^2$ is fed into the 2nd layer and multiplied then added by $W$ and $B$ respectively. Finally with
+element-wise operation be activation function, the output matrix $A^3$ will be obtained with dimension of 
+$m\times n^2$. Here we can see that the output of layer $i$ is of dimension $m\times n^i$: the column number of matrix
+is varying according to the number of nodes of each layer, while the number of rows keeps the same, which is the number
+of input samples. The dimension is actually change by the weight matrix $W^i$ of layer $i$. 
+
+For the last layer, things are a bit different: the number of nodes should be fixed as the dimension of target output. 
+To be more precise, for single-value regression task, there should be only one node in the last layer, and for 
+multi-class classification, the number should be the number of categories of output. This ensure the dimension of
+output matrix keeps the same with target matrix: $m\times n$. 
+
+The whole procedure is actually propagating data from the top of the network layer by layer, or we can call this
+forward propagation. 
+
+#### Error definition
+To compare how far the output matrix is away from target output, error function is defined to get a scalar named 
+error $E$. Here mean square error is used:
+![avatar](/img/20-07-09/Errorfunc.png)
+
+#### Howto learn? 
+Like other statistical models, the "training" of neural network is actually the process of looking for $W$s and $B$s 
+that minimize the error $E$. Ideally, we need to find every $W$ that makes $dE/dW=0$ and $B$ that makes $dE/dB=0$. 
+However in this problem, it is almost impossible to do so for 2 reasons: 1. most neural network are multi-layer, which
+makes it very hard to find the equation of $dE/dW$ for every $W$ (and $B$s of course). 2. The variables we are facing 
+are all matrices but not scalar, which makes it far more complex to find deviation functions. Therefore, gradient 
+descending is introduced. 
+
 
 
 ## Categorization
