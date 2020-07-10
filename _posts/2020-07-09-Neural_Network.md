@@ -43,9 +43,9 @@ $i-1$. Data flow into network layer by layer (operated by a series of operators)
 output matrix. To quantify how biased the output is away from target output, error $E$ is also defined by an error 
 function, taking output matrix and target output matrix as arguments. 
 
-If you google "neural networkeras", tons of example codes will be found, and you could easily "build your own neural
+If you google "neural network keras", tons of example codes will be found, and you could easily "build your own neural
 network" with keras API within several lines. However, for a guy who is studying in SCIENCE, rather than calling some 
-high-level functions in which you never know what is going on， mathematics always makes me feel safe about what I am 
+high-level functions in which you never know what is going on, mathematics always makes me feel safe about what I am 
 doing. To make our lives easier, a simple fully-connected network will be explained in mathematical details. One 
 can easily and the simple one into more complex network. 
 
@@ -59,7 +59,7 @@ The inner part $\sigma^1(W^1\times X + B^1)$ is the output of
 the first layer: the input matrix is multiplied by the weight matrix of the 1st layer and also the bias matrix is 
 added. Then with the weighted matrix $Z^1$, the activation function will operated on $Z^1$ element-wise and
 finally output matrix $A^2$ is obtained, which has the same dimension $m\times n^1$ as matrix $Z^1$. 
-A Small point should be paid attention to that the dimension of mat $W\cdotX$ is $m\times n^1$, while the dimension
+A Small point should be paid attention to that the dimension of mat $W\times X$ is $m\times n^1$, while the dimension
 of bias term is $1\times n^1$. Commonly matrices with different sizes are unable to be added, however here it is
 actually not ordinary sum: the bias vector $B$ is added to each row of matrix $W\times X$ row-wise. Therefore the 
 output matrix of the 1st layer $A^2$ is of dimension $m\times n^1$. 
@@ -73,7 +73,7 @@ of input samples. The dimension is actually change by the weight matrix $W^i$ of
 For the last layer, things are a bit different: the number of nodes should be fixed as the dimension of target output. 
 To be more precise, for single-value regression task, there should be only one node in the last layer, and for 
 multi-class classification, the number should be the number of categories of output. This ensure the dimension of
-output matrix keeps the same with target matrix: $m\times n$. 
+output matrix keeps the same with target matrix: $m\times t$. 
 
 The whole procedure is actually propagating data from the top of the network layer by layer, or we can call this
 forward propagation. 
@@ -91,81 +91,370 @@ makes it very hard to find the equation of $dE/dW$ for every $W$ (and $B$s of co
 are all matrices but not scalar, which makes it far more complex to find deviation functions. Therefore, gradient 
 descending is introduced. 
 
+The ideology of gradient descending is actually modify $W$s and $B$s step be step: in every iteration, the deviation
+matrix of each $W$ and $B$ at the specific point will be calculated, which represent how $E$ will change if every
+element of $W$ or $B$ increase by 1: will $E$ increase or decrease and how much will it change (actually this is
+the meaning of deviation xDDDD). Then with a negative learning rate $\text{lr}$, matrices $W$ is updated as 
+$W-lr\times dE/dW$ and $B := B-lr\times dE/dB$, which ensure $E$ is decreased at each step. 
 
-## Categorization
-According to features of distributed datasets, federated machine learning could be categorized into three different types, 
-horizontal federated learning, vertical federated learning and federated transfer learning[[2]](https://arxiv.org/abs/1902.04885). 
+It is easy to specify a learning rate, now the problem is the deviation of $W$ and $B$: how can we get them? 
+Let us look back how $E$ is obtained from $W$s and $B$s: 
+![avatar](/img/20-07-09/A_Z_A.png)
+We can see that $E$ is the function of $A^{L+1}$, which is the function of $Z^L$, which is the function of $W^L$ and 
+$B^L$... Chain rule can be used to differentiate $E$ on $W$ and $B$ as following: 
+![avatar](/img/20-07-09/Chain.png)
 
-**Horizontal federated learning**
+Lt's check the deviation for $W^L$ first. The deviation of $E$ for $W$ should be a matrix of $n^{L-1}\times t$, which 
+should be the same as the dimensionality of $W$. Firstly, the deviation of $E$ for $A^{L+1}$ is a matrix of 
+$m\times t$ and it is very easy to calculate by substracting $Y$ from $A^{L+1}$ element-wise and divided by 
+$m\times t$. Deviation of $A^{L+1}$ for $Z^L$ is also simple: because activation function is done on matrix $Z^L$ 
+element-wise as well, so this step can also be done by element-wise calculation. So far the dimension of deviation 
+matrix of $E$ for $Z^L$ is $\m\times t$. Further, we know that $W^L\times A^{L-1} + B^L = Z^L$, so the deviation of 
+$Z^L$ for $W^L$ is matrix $A^{L-1}$ with dimension $m\times n^{L-1}$. How can two matrices 
+($\partial E/\partial Z^L$ and $\partial Z^L/\partial W^L$) with dimension of $m\times t$ and $m\times n^{L-1}$ 
+multiplied and get the matrix $dE\dW^L$ of dimension $n^{L-1}\times t$? YES! 
+$\partial E/\partial W^L = (A^{L-1}^t)*\partial E/\partial Z^L$. 
 
-Horizontal federated learning is introduced in the scenarios in which datasets share similar feature space but different 
-sample spaces. The Gboard test is a typical example of horizontal federated learning: data of users have exactly the 
-same features but samples vary[[4]](https://ai.googleblog.com/2017/04/federated-learning-collaborative.html).
+For the second deviation for $B^L$, the matrix should be of dimension $1\times t$, however, $\partial E/\partial Z$
+is a matrix of $m\times t$, and $\partial Z/\partial B$ is a constant 1. If multiplied, the deviation matrix would 
+be of dimension $m\times t$. How can we deal with this? Actually it is easy to be handled if we think a bit more. This 
+$m\times t$ matrix basically means for each sample, how large E will be if $B$ is increased by 1. Because vector
+$B$ was added to $W*A$ row-wise, of course here we will get multiple "version" of deviation on $B$. To keep it 
+consistent, all we need to do is simply do an column-wise average on matrix $\partial E/\partial B$ and reduce the 
+$m\times t$ matrix to a $1\times t$ vector! 
 
-To construct a horizontal federated learning model, 5 major steps are required: 
-1. Participants locally train their local model and send masked results to the server; 
-2. The server platforms secure aggregation withoput learning information about any participant; 
-3. The server pushes back the aggregated results to participants; 
-4. Participants update their respective model with the global model and test as-obtain global model; 
-5. repeat 1-4. 
+So far, we have already done deviation for $W^L$ and $B^L$, how can we do deviation for other $W$s and $B$s in an
+easier way? 
 
-**Vertical federated learning**
+#### Delta
+You might have noticed that both deviation of E on $W^L$ and $B^L$ share a common part: $\partial E/\partial Z^L$. 
+If we pick this variable out and define it as $\Delta ^L$, which represents the error distributed on layer $L$, life
+will be easier: we can easily obtain deviation of E for $W^L$ and $B^L$ from $\Delta ^L$. Also we can compute 
+$\Delta ^{i-1}$ from $\Delta ^{i}$ easily with just some proofFollowing are 4 important equations in back 
+propagation. 
+![avatar](/img/20-07-09/bp4.png)
+Here finally we have the term "back propagation". Personally I assume this term is demonstrating that the error $E$
+is passed with $\partial E/\partial Z^i$ layer by layer backwards and distributed to each node, just like an 
+opposite way forward propagation did. 
 
-Vertical federated learning is appicable to the cases in which datasets share the same sample ID space but differ in 
-feature space. An example is that in a certain region, data in the local bank and local supermacket are the scenarios 
-of this type: they have similar sample IDs (data of local residents) but different features. 
+#### Training
+In each iteration, sample data are fed into network by forward propagation and finally error $E$ is obtained. 
+Then with back propagation error is passed backwards and all $W$s and $B$s get updated. After numerous iterations, 
+finally $W$s and $B$s will get converged and the model is ready. This is what we called "training of neural network". 
 
-To construct a vertical federated learning model, 4 major step are required: 
-1. Collaborator C creates encryption pairs and sends a public key to local machine A and B; 
-2. A and B encrypt and exchange the intermediate results for local models; 
-3. A and B compute encrypted gradients and add an additional mask, respectively. A and B also compute encrypted loss and send encrypted values to C; 
-4. C decrypts and sends the decrypted gradients and loss back to A and B. A and B unmask the gradients and update the model parameters coordingly. 
+## Code
+Code of implementation is attached. 
+````
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
 
-**Federated transferring learning**
+/* #define HIDDEN_NODE 10 */
+#define BATCH_SIZE 2
+#define EPOCH 100000
+#define LEARNING_RATE 0.1f
+#define WRITE_PREDICTION 1
 
-Federated transfer learning applies to the scenarios in which two datasets differ not only in samples but also feature space. 
+double* read_file(const char*, int*, int*); 
+void vis(double*, int, int); 
+double* multiply(double*, int, int, double*, int, int); 
+void init_matrix(double*, int, int); 
+void shuffle(double*, double*, int, 
+        double*, double*, int, 
+        int, int); 
+void matrix_expand(double*, int, int, double*); 
+double sigmoid(double); 
+double dsigmoid(double); 
+void matrix_apply(double*, int, int, double(*function)(double)); 
+double add_1(double a){return a+1;}; 
+double quad_error(double*, double*, int, int); 
+double* last_layer_delta(double*, double*, int, int); 
+double* delta_to_delta(double*, double*, double*, int, int, int); 
+double* trans(double*, int, int); 
+void update_bias(double*, double*, double, int, int); 
+void update_weight(double*, double*, double*, double, int, int, int);
+void write_error(char*, double*, int); 
 
-## Related conceptions
-Federated machine learning enables multiple parties to collaboratively construct a machine learning model while keeping 
-data protected. It is rooted on many existing topics and sometimes is confusable with some concepts. 
+int main(int argc, char** argv){
+    if(argc != 4){
+        printf("Invalid input: 3 parameters required! \n"); 
+        return -1; 
+    }
+    int num_sample1, num_feature, num_sample2, num_target; 
+    double* training_x = read_file(argv[1], &num_sample1, &num_feature); 
+    double* training_y = read_file(argv[2], &num_sample2, &num_target); 
+    if(num_sample1 != num_sample2){
+        perror("Invalid training dataset: samples in matrix x must equal to samples in y! \n"); 
+        return -1; 
+    }
+    int num_sample = num_sample1; 
+    double lr = LEARNING_RATE;  
+    int HIDDEN_NODE = atoi(argv[3]); 
 
-**Federated learning and distributed machine learning**
+    double* hidden_weight = malloc(sizeof(double)*num_feature*HIDDEN_NODE); 
+    double* hidden_bias = malloc(sizeof(double)*1*HIDDEN_NODE); 
+    double* output_weight = malloc(sizeof(double)*HIDDEN_NODE*num_target); 
+    double* output_bias = malloc(sizeof(double)*1*num_target); 
+    
+    double* output_delta; 
+    double* hidden_delta; 
 
-Federated learning is similar to distributed machine learning at the first sight. However, federated machine learning 
-faces a more complex environment. Distributed machine learning is aimed to train a model distributedly, which means 
-during the training process, the central training nodes have full access to all datasets like a master-slave structure. 
-However, federated machine learning does not has this feature due to data-privacy protection and all participants are 
-also free to join or leave the alliance anytime. 
+    init_matrix(hidden_weight, num_feature, HIDDEN_NODE); 
+    init_matrix(hidden_bias, 1, HIDDEN_NODE); 
+    init_matrix(output_weight, HIDDEN_NODE, num_target); 
+    init_matrix(output_bias, 1, num_target); 
 
-**Federated learning and edge computing**
+    double* hidden_layer, *output_layer; 
 
-Federated learning can be seen as an application of edge computing. Many training work is done locally and central 
-server aggregate local models, optimize the global model and push it to edges. 
+    double* error_his = malloc(sizeof(double)*EPOCH*num_sample/BATCH_SIZE);
+    for(int iteration=0; iteration<EPOCH*num_sample/BATCH_SIZE; iteration++){
+	shuffle(input_x, input_y, BATCH_SIZE,
+	    training_x, training_y, num_sample,
+	num_feature, num_target);
 
-**Federated learning and differential privacy**
+	/* Forward pass */	
+	/* Input to hidden layer */
+	hidden_layer = multiply(input_x, BATCH_SIZE, num_feature, 
+				hidden_weight, num_feature, HIDDEN_NODE); 
+	matrix_expand(hidden_layer, BATCH_SIZE, HIDDEN_NODE, hidden_bias); 
+	matrix_apply(hidden_layer, BATCH_SIZE, HIDDEN_NODE, sigmoid); 
 
-The most significant feature of federated learning is data-privacy protection, which looks similar to differential 
-privacy. However, they have totally different mechanisms. Differential privacy exchange user data with encrption 
-methods, while federated learning does not exchange local data: only some local model parameters exchange and updating 
-are required. Under some strict data-privacy policies, data exchange with differential privacy might be illegal, while 
-federated learning will not face such problems at all. 
+	/* Input to output layer */
+	output_layer = multiply(hidden_layer, BATCH_SIZE, HIDDEN_NODE, 
+				output_weight, HIDDEN_NODE, num_target); 
+	matrix_expand(output_layer, BATCH_SIZE, num_target, output_bias); 
+	matrix_apply(output_layer, BATCH_SIZE, num_target, sigmoid); 
+	
 
-## Challenges
-Though federated learning has many advantages, it faces challenges as well:
+	/* Back propagation */	
+	double error = quad_error(output_layer, input_y, BATCH_SIZE, num_target)/(BATCH_SIZE*num_target); 
+	error_his[iteration] = error; 
+	output_delta = last_layer_delta(output_layer,input_y, BATCH_SIZE, num_target); 
+	hidden_delta = delta_to_delta(output_delta, output_weight, hidden_layer, 
+				    num_target, BATCH_SIZE, HIDDEN_NODE); 
 
-1. The diversity in datasets at different parties will affect the the performance of global model, including 
-distribution of different features, unbalanced numbers of samples and even different representation of data;
-2. Classic machine models are able to provide solid prediction, however, the performance of aggregated models are not 
-guaranteed to be solid enough. Therefore, further investigation on algorithms of model aggregation is required;
-3. Classic training algorithms require low-latency, high-throughput communications, however it will be very costly for 
-federated learning scenarios, in which data are stored distributedly. Therefore algorithms that take few iterations of 
-high-quality update are required to reduce communication cost[[4]](https://ai.googleblog.com/2017/04/federated-learning-collaborative.html). 
+	/* Update weights and bias */
+	update_bias(output_bias, output_delta, lr, BATCH_SIZE, num_target);
+	update_weight(output_weight, output_delta, hidden_layer, lr, 
+		    BATCH_SIZE, HIDDEN_NODE, num_target); 
+	update_bias(hidden_bias, hidden_delta, lr, BATCH_SIZE, HIDDEN_NODE); 
+	update_weight(hidden_weight, hidden_delta, input_x, lr, 
+		    BATCH_SIZE, num_feature, HIDDEN_NODE); 
+	free(hidden_layer); 
+	free(output_layer); 
+	free(output_delta); 
+	free(hidden_delta);
+    }
+    
+    printf("Hidden weight:\n"); 
+    vis(hidden_weight, num_feature, HIDDEN_NODE);
+    printf("Hidden bias:\n"); 
+    vis(hidden_bias, 1, HIDDEN_NODE);  
+    printf("Output weight:\n"); 
+    vis(output_weight, HIDDEN_NODE, num_target); 
+    printf("Output bias:\n"); 
+    vis(output_bias, 1, num_target); 
 
-## Conclusion
-Due to data-privacy protection, the size of data and commercial competence, data isolation has become a huge barrier 
-for better performance of machine learning model. But federate learning is a novel approach to solve this problem and 
-it has attracted many interests of researchers. In this summary, we have generally discussed the basic definition, 
-categorization and faced challenges of federated machine learning. We are expecting that federated machine learning 
-become a mature technology to share knowledge with safety within parties and benefit all its alliance members. 
+#if WRITE_PREDICTION
+    /* double* result = multiply(training_x, ) */
+
+#endif   
+ 
+    char* s1 = argv[3]; 
+    char* s2 = "error_"; 
+    char* s3 = malloc(strlen(s1)+strlen(s2)+1); 
+    strcpy(s3, s2); 
+    strcat(s3, s1); 
+
+    write_error(s3, error_his, EPOCH*num_sample/BATCH_SIZE); 
+    free(s3); 
+    free(hidden_weight); 
+    free(hidden_bias); 
+    free(output_weight); 
+    free(output_bias); 
+    free(training_x); 
+    free(training_y); 
+    free(input_x); 
+    free(input_y); 
+    free(error_his); 
+    return 0; 
+}
+
+double* read_file(const char* file, int* dim1, int* dim2){
+    FILE* fp; 
+    if((fp = fopen(file, "r")) == NULL){
+        perror("Could not open file! \n"); 
+        return NULL; 
+    }
+    if(fscanf(fp, "%d ", dim1) == EOF){return NULL; }
+    if(fscanf(fp, "%d ", dim2) == EOF){return NULL; } 
+    double* data = malloc(sizeof(double)*(*dim1)*(*dim2)); 
+    for(int i=0; i<(*dim1)*(*dim2); i++){
+        if(EOF == fscanf(fp, "%lf ", &(data[i]))){
+	    return NULL; 
+	} 
+    }
+
+    if(0 != fclose(fp)){
+        perror("Warning: Could not close file! \n"); 
+    }
+    return data; 
+}
+
+void vis(double* data, int dim1, int dim2){
+    for(int i=0; i<dim1; i++){
+        for(int j=0; j<dim2; j++){
+            printf("%lf ", data[i*dim2+j]); 
+        }
+        printf("\n"); 
+    }
+}
+
+double* multiply(double* A, int A1, int A2, double* B, int B1, int B2){
+    if(A2 != B1){
+        perror("Invalid matrix A and B: cannot be multiplied! \n"); 
+        return NULL; 
+    }
+    double* C = calloc(sizeof(double), A1*B2); 
+    double* temp = malloc(sizeof(double)*A2); 
+    for(int j=0; j<B2; j++){
+        for(int i=0; i<B1; i++){
+            temp[i] = B[i*B2+j]; 
+        }
+
+        for(int i=0; i<A1; i++){
+            for(int k=0; k<A2; k++){
+                C[i*B2+j] += A[i*A2+k] * temp[k]; 
+            }
+        }
+    }
+    free(temp); 
+    return C; 
+}
+
+void init_matrix(double* mat, int dim1, int dim2){
+    for(int i=0; i<dim1; i++){
+        for(int j=0; j<dim2; j++){
+            mat[i*dim2+j] = (double)rand()/(double)RAND_MAX; 
+        }
+    }
+}
+
+void shuffle(double* input_x, double* input_y, int batch, 
+        double* all_x, double* all_y, int samples, 
+        int num_feature, int num_target){
+    int temp; 
+    for(int i=0; i< batch; i++){
+        temp = rand()%samples; 
+	memcpy(&(input_x[i*num_feature]), &(all_x[temp*num_feature]), num_feature*sizeof(double)); 
+        memcpy(&(input_y[i*num_target]), &(all_y[temp*num_target]), num_target*sizeof(double)); 
+    }
+}
+
+void matrix_expand(double* A, int dim1, int dim2, double* B){
+    for(int i=0; i<dim1; i++){
+	for(int j=0; j<dim2; j++){
+	    A[i*dim2+j] += B[j]; 
+	}
+    }
+}
+
+double sigmoid(double x){
+    return 1/(1+exp(-x)); 
+}
+
+double dsigmoid(double x){
+    return x*(1-x); 
+}
+
+void matrix_apply(double* data, int dim1, int dim2, double(*function)(double)){
+    for(int i=0; i<dim1; i++){
+	for(int j=0; j<dim2; j++){
+	    data[i*dim2+j] = function(data[i*dim2+j]); 
+	}
+    }
+}
+
+double quad_error(double* A, double* B, int dim1, int dim2){
+    double error=0;
+    for(int i=0; i<dim1; i++){
+	for(int j=0; j<dim2; j++){
+	    error += 0.5*(A[i*dim2+j] - B[i*dim2+j]) * (A[i*dim2+j] - B[i*dim2+j]); 
+	}
+    }
+    return error; 
+}
+
+double* last_layer_delta(double* output, double* expected, int dim1, int dim2){
+    double* delta = calloc(sizeof(double), dim1*dim2); 
+    for(int i=0; i<dim1; i++){
+	for(int j=0; j<dim2; j++){
+	    delta[i*dim2+j] = (output[i*dim2+j] - expected[i*dim2+j])*dsigmoid(output[i*dim2+j]); 
+	}
+    }
+    return delta; 
+}
+
+double* delta_to_delta(double* upper_delta, double* weight, double* cur_layer, 
+	int upper_dim, int batch_size, int cur_dim){
+    double* delta; 
+    double* trans_weight = trans(weight, cur_dim, upper_dim); 
+    delta = multiply(upper_delta, batch_size, upper_dim, trans_weight, upper_dim, cur_dim); 
+
+    for(int i=0; i<batch_size; i++){
+	for(int j=0; j<cur_dim; j++){
+	    delta[i*cur_dim+j] *= dsigmoid(cur_layer[i*cur_dim+j]); 
+	}
+    }
+    free(trans_weight); 
+    return delta; 
+}
+
+
+double* trans(double* A, int dim1, int dim2){
+    double* B = malloc(sizeof(double)*dim1*dim2); 
+    for(int i=0; i<dim1; i++){
+	for(int j=0; j<dim2; j++){
+	    B[j*dim1+i] = A[i*dim2+j]; 
+	}
+    }
+    return B; 
+}
+
+void update_bias(double* bias, double* delta, double lr, int batch_size, int dim){
+    double temp; 
+    for(int j=0; j<dim; j++){
+	temp = 0; 
+	for(int i=0; i<batch_size; i++){
+	    temp += delta[i*dim+j]; 
+	}
+	bias[j] -= temp/(double)batch_size*lr; 
+    }
+}
+
+void update_weight(double* weight, double* delta, double* A, 
+	double lr, int batch_size, int left_dim, int right_dim){
+    double* trans_A = trans(A, batch_size, left_dim); 
+    double* result = multiply(trans_A, left_dim, batch_size, delta, batch_size, right_dim); 
+    for(int i=0; i<left_dim; i++){
+	for(int j=0; j<right_dim; j++){
+	    weight[i*right_dim+j] -= lr*result[i*right_dim+j]/batch_size; 
+	}
+    }
+    free(trans_A); 
+    free(result); 
+}
+
+void write_error(char* output, double* error, int num){
+    FILE* fp = fopen(output, "w"); 
+    for(int i=0; i<num; i++){
+	fprintf(fp, "%f ", error[i]); 
+    }
+    fclose(fp); 
+}
+````
+The complete code and Makefile can be founds 
+[here](https://github.com/Li-Ju666/FedML/tree/master/w1/C_implementation/Matrix-based_implementation). 
 
 
