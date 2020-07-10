@@ -49,7 +49,7 @@ high-level functions in which you never know what is going on， mathematics alw
 doing. To make our lives easier, a simple fully-connected network will be explained in mathematical details. One 
 can easily and the simple one into more complex network. 
 
-Following notations will be used:![avatar](../img/20-07-09/notation.png)
+Following notations will be used:![avatar](/img/20-07-09/notation.png)
 #### Initialization
 
 
