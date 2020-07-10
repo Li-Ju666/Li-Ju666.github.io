@@ -1,6 +1,6 @@
 ---
 layout:     post   				    # 使用的布局（不需要改）
-title:      Neural Network: basic concepts and implementation in C				# 标题 
+title:      Neural Network-basic concepts and implementation in C				# 标题 
 subtitle:   
 date:       2020-07-09 				# 时间
 author:     Li Ju 						# 作者
