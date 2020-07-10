@@ -50,7 +50,7 @@ doing. To make our lives easier, a simple fully-connected network will be explai
 can easily and the simple one into more complex network. 
 
 Following notations will be used:
-<<<<<<< HEAD
+![avatar](/img/20-07-09/notations.png)
 #### Forward propagation
 How neural network is dealing with input data is basically represented as following equation: 
 ![avatar](/img/20-07-09/NNequation.png)
