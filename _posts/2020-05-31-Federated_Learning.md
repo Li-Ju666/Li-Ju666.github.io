@@ -8,7 +8,7 @@ header-img: img/post-bg-2015.jpg 	#这篇文章标题背景图片
 catalog: true 						# 是否归档
 mathjax: true
 tags:								#标签
-    Cloud_Computing
+    cloud_computing
 ---
 This article will summarize federated machine learning. 
 
